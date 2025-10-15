@@ -24,3 +24,10 @@ section {
 h1, h2 { color: var(--color-accent); font-family: var(--font-display);}
 a { color: var(--color-link); text-decoration: none; }
 a:hover { text-decoration: underline; }
+
+svg.icon {
+  width: 1.25em;
+  height: 1.25em;
+  vertical-align: middle;
+  fill: currentColor;
+}
