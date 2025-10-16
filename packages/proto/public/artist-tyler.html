@@ -11,28 +11,40 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   </head>
 
-<article>
+<body>
   <header>
-    <h1>Artist</h1>
+    <div class="header-center">Artist</div>
   </header>
 
   <nav aria-label="Home Page">
-      <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
-    </nav>
+    <a href="/index.html" rel="up">Listeners</a> › <span>Tyler Childers</span>
+  </nav>
 
-  <dl>
-    <svg class="icon"><use href="/icons/music.svg#icon-microphone" /></svg>
-    <dt>Name</dt><dd>Tyler Childers</dd>
-    <dt>Genres</dt><dd>Country</dd>
-    <dt>Country</dt><dd>US</dd>
-  </dl>
+  <main class="container">
+    <aside class="profile">
+      <section>
+        <h2>
+            <svg class="icon"><use href="/icons/music.svg#icon-microphone" /></svg>
+            Artist
+        </h2>
+        <dl>
+          <dt>Name</dt><dd>Tyler Childers</dd>
+          <dt>Genres</dt><dd>Country</dd>
+          <dt>Country</dt><dd>US</dd>
+        </dl>
+      </section>
 
-  <section>
-    <h2>Tracks</h2>
-    <ul>
+  <section id="tracks">
+    <h2>
       <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-      <li><a href="song-whitehouse_road.html">Whitehouse Road</a></li>
+      Tracks
+    </h2>
+    <ul class="list">
+      <li>
+        <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
+        <a href="song-whitehouse_road.html">Whitehouse Road</a>
+      </li>
     </ul>
   </section>
-</article>
+  </main>
 </html>
