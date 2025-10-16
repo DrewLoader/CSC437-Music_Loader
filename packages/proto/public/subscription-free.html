@@ -10,27 +10,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   </head>
-<article>
+<body>
   <header>
-    <h1>Subscription</h1>
+    <div class="header-center">Subscription</div>
   </header>
 
   <nav aria-label="Home Page">
       <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
-    </nav>
+  </nav>
 
-  <dl>
-    <dt>User</dt><dd><a href="index.html">u_1024</a></dd>
-    <dt>Plan</dt><dd>Free</dd>
-    <dt>Region</dt><dd>US</dd>
-    <dt>Rights</dt>
-    <dd>
-      <ul>
+  <main class="container">
+    <section id="plan">
+      <h2>
+          Plan Details
+      </h2>
+      <dl>
+        <dt>Name</dt><dd>Free</dd>
+        <dt>Price</dt><dd>Free</dd>
+        <dt>Description</dt><dd>Free plan with ads and limited features</dd>
+      </dl>
+    </section>
+
+    <section id="rights">
+      <h2>
+          Rights and Limitations
+      </h2>
+      <ul class="list">
         <li>Offline playback: no</li>
         <li>Skips limit: 5/hr</li>
         <li>Adds: Yes</li>
-      </ul>
-    </dd>
-  </dl>
-</article>
+    </section>
+  </main>
+</body>
 </html>

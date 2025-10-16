@@ -10,24 +10,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   </head>
-<article>
+<body>
   <header>
-    <h1>Track</h1>
+    <div class="header-center">Track</div>
   </header>
 
   <nav aria-label="Home Page">
       <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
-    </nav>
+  </nav>
 
-  <dl>
-    <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-    <dt>Title</dt><dd>Whitehouse Road</dd>
-    <dt>Artists</dt><dd>
-        <a href="artist-tyler.html">Tyler Childers</a>
-    </dd>
-    <dt>Album</dt><dd>Purgatory (2017)</dd>
-    <dt>Duration</dt><dd>4:40</dd>
-    <dt>BPM</dt><dd>82</dd>
-  </dl>
-</article>
+  <main class="container">
+    <section id="details">
+      <h2>
+          <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
+          Details
+      </h2>
+      <dl>
+          <dt>Title</dt><dd>Whitehouse Road</dd>
+          <dt>Artist</dt><dd><a href="/artist-tyler.html">Tyler Childers</a></dd>
+          <dt>Album</dt><dd>Purgatory (2017)</dd>
+          <dt>Duration</dt><dd>4:40</dd>
+          <dt>BPM</dt><dd>82</dd>
+        </dl>
+    </section>
+  </main>
+</body>
 </html>
