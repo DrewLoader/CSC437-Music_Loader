@@ -6,7 +6,6 @@ export class UserCard extends LitElement {
         region: { type: String },
         since: { type: String },
         email: { type: String },
-        sectionId: { type: String }
     };
 
     constructor() {
@@ -15,19 +14,18 @@ export class UserCard extends LitElement {
         this.region = '';
         this.since = '';
         this.email = '';
-        this.sectionId = 'profile';
     }
     
     createRenderRoot() { return this; }
 
     render() {
         return html`
-            <section id = "${this.sectionId}">
+            <section id = "profile">
                 <h2>
                     <svg class="icon"><use href="/icons/music.svg#icon-headphone" /></svg>
                     Profile
                 </h2>
-                <ul class = "list">
+                <ul class ="list">
                     <li>ID: ${this.userId}</li>
                     <li>Region: ${this.region}</li>
                     <li>Member since: ${this.since}</li>
