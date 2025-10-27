@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html } from 'https://unpkg.com/lit@3/index.js?module';
 
 export class UserCard extends LitElement {
     static properties = {
