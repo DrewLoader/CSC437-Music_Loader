@@ -24,18 +24,13 @@
     </nav>
 
     <main class="container">
-      <section id="profile">
-        <h2>
-            <svg class="icon"><use href="/icons/music.svg#icon-headphone" /></svg>
-            Profile
-        </h2>
-        <ul class="list">
-          <li>ID: u_1024</li>
-          <li>Region: US</li>
-          <li>Member since: 09-30-2025</li>
-          <li>Email: andrew.l@example.com</li>
-        </ul>
-      </section>
+
+      <user-card>
+        user-id="u_1024"
+        region="US"
+        since="09-30-2025"
+        email="andrew.l@example.com"
+      </user-card>
 
       <section id="subscription">
         <h2>Subscription</h2>
@@ -73,5 +68,6 @@
       </section>
     </main>
     <script type="module" src="/scripts/dark-mode.js"></script>
+    <script type="module" src="components/music-profile.js"></script>
   </body>
 </html>
