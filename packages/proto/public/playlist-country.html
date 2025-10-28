@@ -53,7 +53,10 @@
       </ul>
     </section>
     <script type="module" src="/scripts/dark-mode.js"></script>
-    <script type="module" src="/components/playlist-details.js"></script>
+    <script type="module">
+      import { PlaylistDetails } from "/src/playlist-details.js";
+      customElements.define('playlist-details', PlaylistDetails);
+    </script>
     <script type="module" src="/components/playlist-songs.js"></script>
   </body>
 </html>

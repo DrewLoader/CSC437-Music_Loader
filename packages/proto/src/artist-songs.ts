@@ -5,7 +5,7 @@ export class ArtistSongs extends LitElement {
   @property() title: string = "";
   @property() href: string = "#";
 
-  // Use light DOM so your existing CSS applies
+
   protected createRenderRoot() { return this; }
 
   override render() {
