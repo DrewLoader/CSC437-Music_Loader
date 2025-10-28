@@ -2,17 +2,18 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Track • Whitehouse Road</title>
+    <title>Subscription • Free</title>
     <link rel="stylesheet" href="/styles/reset.css">
     <link rel="stylesheet" href="/styles/tokens.css">
     <link rel="stylesheet" href="/styles/page.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/assets/modulepreload-polyfill-B5Qt9EMX.js"></script>
   </head>
 <body>
   <header>
-    <div class="header-center">Track</div>
+    <div class="header-center">Subscription</div>
     <label class="mode-switch">
       <input type="checkbox" autocomplete="off" />
       Dark mode
@@ -24,26 +25,26 @@
   </nav>
 
   <main class="container">
-    <section id="details">
+    <section id="plan">
       <h2>
-          <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-          Details
+          Plan Details
       </h2>
-      <song-details
-        title="Whitehouse Road"
-        artistName="Tyler Childers"
-        artistHref="/artist-tyler.html"
-        album="Purgatory"
-        duration="4:32"
-        bpm="120">
-      </song-details>
+      <dl class="two">
+        <dt>Price</dt><dd>Free</dd>
+        <dt>Description</dt><dd>Free plan with ads and limited features</dd>
+      </dl>
+    </section>
+
+    <section id="rights">
+      <h2>
+          Rights and Limitations
+      </h2>
+      <ul class="list">
+        <li>Offline playback: no</li>
+        <li>Skips limit: 5/hr</li>
+        <li>Adds: Yes</li>
     </section>
   </main>
   <script type="module" src="/scripts/dark-mode.js"></script>
-  <script type="module">
-      import { SongDetails } from "/src/main.ts";
-      customElements.define('song-details', SongDetails);
-  </script>
-  
 </body>
 </html>
