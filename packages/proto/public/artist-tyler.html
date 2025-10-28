@@ -50,6 +50,9 @@
     import { ArtistDetails } from "/src/artist-details.js";
     customElements.define('artist-details', ArtistDetails);
   </script>
-  <script type="module" src="/components/artist-songs.js"></script>
+  <script type="module">
+    import { ArtistSongs } from "/src/artist-songs.js";
+    customElements.define('artist-songs', ArtistSongs);
+  </script>
 </body>
 </html>
