@@ -1,0 +1,1 @@
+import"./modulepreload-polyfill-B5Qt9EMX.js";import{A as t,a as s}from"./artist-songs-DahnqzAz.js";import"./property-B3JFcmA-.js";customElements.define("artist-details",t);customElements.define("artist-songs",s);

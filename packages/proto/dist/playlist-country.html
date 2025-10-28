@@ -1,4 +1,5 @@
 <!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -9,9 +10,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-    <script type="module" crossorigin src="/assets/sub4-4XMSb9T-.js"></script>
+    <script type="module" crossorigin src="/assets/sub4-C_1dbNcT.js"></script>
     <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
     <link rel="modulepreload" crossorigin href="/assets/property-B3JFcmA-.js">
+    <link rel="modulepreload" crossorigin href="/assets/user-playlist-DX-eBV6y.js">
+    <link rel="modulepreload" crossorigin href="/assets/artist-songs-DahnqzAz.js">
+    <link rel="modulepreload" crossorigin href="/assets/song-details-C15G0nss.js">
   </head>
 <body>
   <header>
@@ -23,38 +27,16 @@
   </header>
 
   <nav aria-label="Home Page">
-      <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
-    </nav>
+    <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
+  </nav>
 
 
-  <main class="container">
-    <section id="details">
-      <h2>
-          <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
-          Details
-      </h2>
-      <playlist-details
-        name="Country Playlist"
-        ownerName="Andrew Loader"
-        ownerHref="/listener-andrew.html"
-        visibility="Public"
-        created="09-29-2025"
-        description="A collection of my favorite country tracks.">
-    </section>
-    
-    <section id="tracks">
-      <h2>
-        <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-        Tracks
-      </h2>
-      <ul class = "list">
-        <playlist-songs
-          title="Whitehouse Road"
-          href="/song-whitehouse_road.html"
-          added="09-29-2025">
-        </playlist-songs>
-      </ul>
-    </section>
+  <main>
+    <playlist-view src="/data/playlist-country.json"></playlist-view>
+  </main>
+
     <script type="module" src="/scripts/dark-mode.js"></script>
   </body>
 </html>
+
+
