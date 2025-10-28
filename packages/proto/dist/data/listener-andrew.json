@@ -1,0 +1,9 @@
+{
+  "profile": { "id": "u_1024", "region": "US", "since": "09-30-2025", "email": "andrew.l@example.com" },
+  "playlists": [
+    { "name": "Country Playlist", "href": "/playlist-country.html", "visibility": "Public", "tracks": 1 }
+  ],
+  "following": [
+    { "name": "Tyler Childers", "href": "/artist-tyler.html" }
+  ]
+}

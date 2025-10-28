@@ -1,0 +1,13 @@
+{
+  "details": {
+    "name": "Country",
+    "ownerName": "Andrew Loader",
+    "ownerHref": "/listener-andrew.html",
+    "visibility": "Public",
+    "created": "09-29-2025",
+    "description": "Country music"
+  },
+  "tracks": [
+    { "title": "Whitehouse Road", "href": "/song-whitehouse_road.html", "added": "09-29-2025" }
+  ]
+}
