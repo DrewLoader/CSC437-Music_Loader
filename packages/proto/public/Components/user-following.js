@@ -20,4 +20,4 @@ export class UserFollowing extends LitElement {
   }
 }
 
-customElements.define('user-following', MusicArtistItem);
+customElements.define('user-following', UserFollowing);
