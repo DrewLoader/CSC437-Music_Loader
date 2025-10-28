@@ -57,6 +57,9 @@
       import { PlaylistDetails } from "/src/playlist-details.js";
       customElements.define('playlist-details', PlaylistDetails);
     </script>
-    <script type="module" src="/components/playlist-songs.js"></script>
+    <script type="module">
+      import { PlaylistSongs } from "/src/playlist-songs.js";
+      customElements.define('playlist-songs', PlaylistSongs);
+    </script>
   </body>
 </html>
