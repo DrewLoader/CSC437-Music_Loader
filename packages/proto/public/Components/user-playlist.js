@@ -10,7 +10,7 @@ class UserPlaylist extends LitElement {
     constructor() {
         super();
         this.name = '';
-        this.href = '';
+        this.href = '#';
         this.visibility = '';
         this.tracks = 0;
     }
