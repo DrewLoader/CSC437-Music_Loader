@@ -47,11 +47,12 @@
             Playlists
         </h2>
         <ul class="list">
-          <li>
-            <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
-            <a href="/playlist-country.html">Country Playlist</a>
-            <small>Public: 1 tracks</small>
-          </li>
+          <user-playlist
+            playlist-name="Country Playlist"
+            playlist-link="/playlist-country.html"
+            visibility="Public"
+            track-count="1">
+          </user-playlist>
         </ul>
       </section>
 
@@ -61,13 +62,16 @@
             Following Artists
         </h2>
         <ul class="list">
-          <li>
-            <a href="/artist-tyler.html">Tyler Childers</a>
-        </li>
+          <user-following
+            name="Tyler Childers"
+            href="/artist-tyler.html">
+          </user-following>
         </ul>
       </section>
     </main>
     <script type="module" src="/scripts/dark-mode.js"></script>
     <script type="module" src="components/user-card.js"></script>
+    <script type="module" src="components/user-playlist.js"></script>
+    <script type="module" src="components/user-following.js"></script>
   </body>
 </html>

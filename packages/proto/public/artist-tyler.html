@@ -26,17 +26,11 @@
 
   <main class="container">
     <aside class="profile">
-      <section>
-        <h2>
-            <svg class="icon"><use href="/icons/music.svg#icon-microphone" /></svg>
-            Artist
-        </h2>
-        <dl class="two">
-          <dt>Name</dt><dd>Tyler Childers</dd>
-          <dt>Genres</dt><dd>Country</dd>
-          <dt>Country</dt><dd>US</dd>
-        </dl>
-      </section>
+      <artist-details
+        name="Tyler Childers"
+        genres="Country, Folk"
+        country="US">
+      </artist-details>
 
   <section id="tracks">
     <h2>
@@ -44,13 +38,15 @@
       Tracks
     </h2>
     <ul class="list">
-      <li>
-        <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-        <a href="song-whitehouse_road.html">Whitehouse Road</a>
-      </li>
+      <artist-songs
+        title="Whitehouse Road"
+        href="song-whitehouse_road.html">
+      </artist-songs>
     </ul>
   </section>
   </main>
   <script type="module" src="/scripts/dark-mode.js"></script>
+  <script type="module" src="/components/artist-details.js"></script>
+  <script type="module" src="/components/artist-songs.js"></script>
 </body>
 </html>

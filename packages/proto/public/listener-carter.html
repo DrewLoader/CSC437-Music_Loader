@@ -24,18 +24,13 @@
     </nav>
 
     <main class="container">
-      <section id="profile">
-        <h2>
-            <svg class="icon"><use href="/icons/music.svg#icon-headphone" /></svg>
-            Profile
-        </h2>
-        <ul class="list">
-          <li>ID: u_2048</li>
-          <li>Region: US</li>
-          <li>Member since: 02-08-2025</li>
-          <li>Email: carter.s@example.com</li>
-        </dl>
-      </section>
+
+      <user-card
+        user-id="u_2048"
+        region="US"
+        since="02-08-2025"
+        email="carter.s@example.com">
+      </user-card>
 
       <section id="subscription">
         <h2>Subscription</h2>
@@ -52,11 +47,12 @@
             Playlists
         </h2>
         <ul class="list">
-          <li>
-            <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
-            <a href="/playlist-country.html">Country Playlist</a>
-            <small>Public: 1 tracks</small>
-          </li>
+          <user-playlist
+            playlist-name="Country Playlist"
+            playlist-link="/playlist-country.html"
+            visibility="Public"
+            track-count="1">
+          </user-playlist>
         </ul>
       </section>
 
@@ -66,13 +62,16 @@
             Following Artists
         </h2>
         <ul class="list">
-          <li>
-            <a href="/artist-tyler.html">Tyler Childers</a>
-        </li>
+        <user-following
+            name="Tyler Childers"
+            href="/artist-tyler.html">
+          </user-following>
         </ul>
       </section>
     </main>
     <script type="module" src="/scripts/dark-mode.js"></script>
     <script type="module" src="components/user-card.js"></script>
+    <script type="module" src="components/user-playlist.js"></script>
+    <script type="module" src="components/user-following.js"></script>
   </body>
 </html>

@@ -30,13 +30,13 @@
           <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
           Details
       </h2>
-      <dl class="two">
-        <dt>Name</dt><dd>Country</dd>
-        <dt>Owner</dt><dd><a href="listener-andrew.html">Andrew Loader</a></dd>
-        <dt>Visibility</dt><dd>Public</dd>
-        <dt>Created</dt><dd>09-29-2025</dd>
-        <dt>Description</dt><dd>Country music</dd>
-      </dl>
+      <playlist-details
+        name="Country Playlist"
+        owner-name="Andrew Loader"
+        owner-href="/listener-andrew.html"
+        visibility="Public"
+        created="09-29-2025"
+        description="A collection of my favorite country tracks.">
     </section>
     
     <section id="tracks">
@@ -45,13 +45,15 @@
         Tracks
       </h2>
       <ul class = "list">
-        <li>
-          <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-          <a href="song-whitehouse_road.html">WhiteHouse Road</a>
-          <small>added 09-29-2025</small>
-        </li>
+        <music-track-item
+          title="Whitehouse Road"
+          href="/song-whitehouse_road.html"
+          added="09-29-2025">
+        </music-track-item>
       </ul>
     </section>
     <script type="module" src="/scripts/dark-mode.js"></script>
+    <script type="module" src="/components/playlist-details.js"></script>
+    <script type="module" src="/components/playlist-songs.js"></script>
   </body>
 </html>
