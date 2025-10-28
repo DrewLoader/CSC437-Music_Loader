@@ -6,3 +6,4 @@ import './artist-songs.ts';
 import './playlist-details.ts';
 import './playlist-songs.ts';
 import './song-details.ts';
+import './components/playlist-view.ts'

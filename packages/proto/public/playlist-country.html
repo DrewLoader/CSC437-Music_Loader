@@ -20,46 +20,17 @@
   </header>
 
   <nav aria-label="Home Page">
-      <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
-    </nav>
+    <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
+  </nav>
 
 
-  <main class="container">
-    <section id="details">
-      <h2>
-          <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
-          Details
-      </h2>
-      <playlist-details
-        name="Country Playlist"
-        ownerName="Andrew Loader"
-        ownerHref="/listener-andrew.html"
-        visibility="Public"
-        created="09-29-2025"
-        description="A collection of my favorite country tracks.">
-    </section>
-    
-    <section id="tracks">
-      <h2>
-        <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
-        Tracks
-      </h2>
-      <ul class = "list">
-        <playlist-songs
-          title="Whitehouse Road"
-          href="/song-whitehouse_road.html"
-          added="09-29-2025">
-        </playlist-songs>
-      </ul>
-    </section>
+  <main>
+    <playlist-view src="/data/playlist-country.json"></playlist-view>
+  </main>
+
+    <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/scripts/dark-mode.js"></script>
-    <script type="module">
-      import { PlaylistDetails } from "/src/main.ts";
-      customElements.define('playlist-details', PlaylistDetails);
-    </script>
-    <script type="module">
-      import { PlaylistSongs } from "/src/main.ts";
-      customElements.define('playlist-songs', PlaylistSongs);
-    </script>
   </body>
 </html>
+
+
