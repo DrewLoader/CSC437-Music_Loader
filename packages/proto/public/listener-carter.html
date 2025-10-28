@@ -74,7 +74,13 @@
       import { UserCard } from "/src/user-card.js";
       customElements.define('user-card', UserCard);
     </script>
-    <script type="module" src="components/user-playlist.js"></script>
-    <script type="module" src="components/user-following.js"></script>
+    <script type="module">
+      import { UserFollowing } from "/src/user-following.js";
+      customElements.define('user-following', UserFollowing);
+    </script>
+    <script type="module">
+      import { UserPlaylist } from "/src/user-playlist.js";
+      customElements.define('user-playlist', UserPlaylist);
+    </script>
   </body>
 </html>
