@@ -3,8 +3,8 @@ import { property } from "lit/decorators.js";
 
 export class SongDetails extends LitElement {
   @property() title: string = "";
-  @property({ attribute: "artist-name" }) artistName: string = "";
-  @property({ attribute: "artist-href" }) artistHref: string = "";
+  @property() artistName: string = "";
+  @property() artistHref: string = "";
   @property() album: string = "";
   @property() duration: string = "";
   @property() bpm: string = "";
