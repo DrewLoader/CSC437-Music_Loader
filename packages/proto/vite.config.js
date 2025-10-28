@@ -9,12 +9,12 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-        sub: resolve(__dirname, 'artist-tyler.html'),
-        sub: resolve(__dirname, 'listener-andrew.html'),
-        sub: resolve(__dirname, 'listener-carter.html'),
-        sub: resolve(__dirname, 'playlist-country.html'),
-        sub: resolve(__dirname, 'song-whitehouse_road.html'),
-        sub: resolve(__dirname, 'subscription.html'),
+        sub1: resolve(__dirname, 'artist-tyler.html'),
+        sub2: resolve(__dirname, 'listener-andrew.html'),
+        sub3: resolve(__dirname, 'listener-carter.html'),
+        sub4: resolve(__dirname, 'playlist-country.html'),
+        sub5: resolve(__dirname, 'song-whitehouse_road.html'),
+        sub6: resolve(__dirname, 'subscription.html'),
       },
     },
   },
