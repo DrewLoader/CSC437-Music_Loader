@@ -47,12 +47,8 @@
   </main>
   <script type="module" src="/scripts/dark-mode.js"></script>
   <script type="module">
-    import { define } from "@calpoly/mustang";
     import { ArtistDetails } from "/src/artist-details.js";
-
-    define({
-      "artist-details": ArtistDetails
-    });
+    customElements.define('artist-details', ArtistDetails);
   </script>
   <script type="module" src="/components/artist-songs.js"></script>
 </body>
