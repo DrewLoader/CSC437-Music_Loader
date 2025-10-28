@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Listener • Andrew Loader</title>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <header>
+      <div class="header-center">Listener: Andrew Loader</div>
+      <label class="mode-switch">
+        <input type="checkbox" autocomplete="off" />
+        Dark mode
+    </label>
+    </header>
+
+    <nav aria-label="Home Page">
+      <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
+    </nav>
+
+    <main class="container">
+
+      <user-card
+        user-id="u_1024"
+        region="US"
+        since="09-30-2025"
+        email="andrew.l@example.com">
+      </user-card>
+
+      <section id="subscription">
+        <h2>Subscription</h2>
+        <ul class="list">
+          <li>Plan: <a href="/subscription-free.html">Free</a></li>
+          <li>Status: Active</li>
+          <li>Renews: 10-30-2025</li>
+        </dl>
+      </section>
+
+      <section id="playslists">
+        <h2>
+            <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
+            Playlists
+        </h2>
+        <ul class="list">
+          <user-playlist
+            name="Country Playlist"
+            href="/playlist-country.html"
+            visibility="Public"
+            tracks="1">
+          </user-playlist>
+        </ul>
+      </section>
+
+      <section id="artists">
+        <h2>
+            <svg class="icon"><use href="/icons/music.svg#icon-microphone" /></svg>
+            Following Artists
+        </h2>
+        <ul class="list">
+          <user-following
+            name="Tyler Childers"
+            href="/artist-tyler.html">
+          </user-following>
+        </ul>
+      </section>
+    </main>
+    <script type="module" src="/scripts/dark-mode.js"></script>
+    <script type="module">
+      import { UserCard } from "/src/user-card.js";
+      customElements.define('user-card', UserCard);
+    </script>
+    <script type="module">
+      import { UserFollowing } from "/src/user-following.js";
+      customElements.define('user-following', UserFollowing);
+    </script>
+    <script type="module">
+      import { UserPlaylist } from "/src/user-playlist.js";
+      customElements.define('user-playlist', UserPlaylist);
+    </script>
+  </body>
+</html>
