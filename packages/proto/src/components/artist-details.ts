@@ -5,9 +5,9 @@ export class ArtistDetails extends LitElement {
   // Keep styling from page.css by using light DOM:
   protected createRenderRoot() { return this; }
 
-  @property() name = "";
-  @property() genres = "";
-  @property() country = "";
+  @property() name: string = "";
+  @property() genres: string = "";
+  @property() country: string = "";
 
   override render() {
     return html`
