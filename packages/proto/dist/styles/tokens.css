@@ -1,0 +1,28 @@
+:root {
+    --color-bg: #bdbdbd;
+    --color-surface: #bdbdbd;
+    --color-border: #263241;
+    --color-header-bg: #9abaff;
+    --color-text: #000305;
+    --color-header-text: #ffffff;
+    --color-accent: #002f9c;
+    --color-link: var(--color-accent);
+
+
+    --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    --font-display: "Playfair Display", Georgia, "Times New Roman", serif;
+
+    --font-sans: var(--font-body);
+
+    body.dark-mode {
+        --color-bg: #0b0f14;
+        --color-surface: #121826;
+        --color-border: #263241;
+        --color-header-bg: #172033;
+        --color-text: #e6edf3;
+        --color-header-text: #ffffff;
+        --color-accent: #7aa2ff;
+        --color-link: var(--color-accent);
+    }
+
+}

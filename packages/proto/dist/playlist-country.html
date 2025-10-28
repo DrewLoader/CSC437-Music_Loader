@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Playlist • Country</title>
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/tokens.css">
+    <link rel="stylesheet" href="/styles/page.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  </head>
+<body>
+  <header>
+    <div class="header-center">Playlist</div>
+    <label class="mode-switch">
+      <input type="checkbox" autocomplete="off" />
+      Dark mode
+    </label>
+  </header>
+
+  <nav aria-label="Home Page">
+      <a href="/index.html" rel="up">Listeners</a> › <span>Andrew Loader</span>
+    </nav>
+
+
+  <main class="container">
+    <section id="details">
+      <h2>
+          <svg class="icon"><use href="/icons/music.svg#icon-playlist" /></svg>
+          Details
+      </h2>
+      <playlist-details
+        name="Country Playlist"
+        ownerName="Andrew Loader"
+        ownerHref="/listener-andrew.html"
+        visibility="Public"
+        created="09-29-2025"
+        description="A collection of my favorite country tracks.">
+    </section>
+    
+    <section id="tracks">
+      <h2>
+        <svg class="icon"><use href="/icons/music.svg#icon-record" /></svg>
+        Tracks
+      </h2>
+      <ul class = "list">
+        <playlist-songs
+          title="Whitehouse Road"
+          href="/song-whitehouse_road.html"
+          added="09-29-2025">
+        </playlist-songs>
+      </ul>
+    </section>
+    <script type="module" src="/scripts/dark-mode.js"></script>
+    <script type="module">
+      import { PlaylistDetails } from "/src/playlist-details.js";
+      customElements.define('playlist-details', PlaylistDetails);
+    </script>
+    <script type="module">
+      import { PlaylistSongs } from "/src/playlist-songs.js";
+      customElements.define('playlist-songs', PlaylistSongs);
+    </script>
+  </body>
+</html>
