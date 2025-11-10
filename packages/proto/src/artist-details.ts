@@ -25,3 +25,5 @@ export class ArtistDetails extends LitElement {
     `;
   }
 }
+
+customElements.define('artist-details', ArtistDetails);

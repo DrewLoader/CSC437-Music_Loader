@@ -22,3 +22,5 @@ export class UserPlaylist extends LitElement {
     `;
   }
 }
+
+customElements.define('user-playlist', UserPlaylist);

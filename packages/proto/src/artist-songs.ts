@@ -19,3 +19,5 @@ export class ArtistSongs extends LitElement {
     `;
   }
 }
+
+customElements.define('artist-songs', ArtistSongs);

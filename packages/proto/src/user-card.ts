@@ -26,3 +26,5 @@ export class UserCard extends LitElement {
     `;
   }
 }
+
+customElements.define('user-card', UserCard);

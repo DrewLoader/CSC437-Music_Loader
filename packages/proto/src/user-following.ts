@@ -11,3 +11,5 @@ export class UserFollowing extends LitElement {
     return html`<li><a href="${this.href}">${this.name}</a></li>`;
   }
 }
+
+customElements.define('user-following', UserFollowing);

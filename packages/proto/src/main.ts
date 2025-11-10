@@ -1,9 +1,9 @@
-import './user-following.ts';
-import './user-playlists.ts';
-import './user-card.ts';
-import './artist-details.ts';
-import './artist-songs.ts';
+import './user-following';
+import './user-playlists';
+import './user-card';
+import './artist-details';
+import './artist-songs';
 import './playlist-details';
 import './playlist-songs';
-import './song-details.ts';
+import './song-details';
 import './components/playlist-view.ts'

@@ -28,3 +28,5 @@ export class SongDetails extends LitElement {
     `;
   }
 }
+
+customElements.define('song-details', SongDetails);
