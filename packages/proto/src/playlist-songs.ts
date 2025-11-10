@@ -20,3 +20,5 @@ export class PlaylistSongs extends LitElement {
     `;
   }
 }
+
+customElements.define('playlist-songs', PlaylistSongs);

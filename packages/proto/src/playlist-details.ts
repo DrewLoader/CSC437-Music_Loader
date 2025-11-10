@@ -31,3 +31,5 @@ export class PlaylistDetails extends LitElement {
     `;
   }
 }
+
+customElements.define('playlist-details', PlaylistDetails);
