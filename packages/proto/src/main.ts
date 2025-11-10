@@ -1,5 +1,5 @@
 import './user-following';
-import './user-playlists';
+import './user-playlist';
 import './user-card';
 import './artist-details';
 import './artist-songs';

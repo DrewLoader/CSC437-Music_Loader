@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
-import './playlist-details';
-import './playlist-songs';
+import '../playlist-details';
+import '../playlist-songs';
 
 type Track = { title: string; href: string; added?: string };
 type PlaylistDetails = {
