@@ -22,6 +22,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
+var import_mongo = require("./services/mongo");
+var import_playlistView_src = __toESM(require("./services/playlistView-src"));
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
@@ -31,4 +33,12 @@ app.get("/hello", (req, res) => {
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
+});
+(0, import_mongo.connect)("Music");
+app.get("/playlists/:name", (req, res) => {
+  const { name } = req.params;
+  import_playlistView_src.default.get(name).then((data) => {
+    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
+    else res.status(404).send();
+  });
 });
