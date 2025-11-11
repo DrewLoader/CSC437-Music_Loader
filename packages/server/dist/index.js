@@ -31,8 +31,8 @@ const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("Music");
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
+app.use("/auth", import_auth.default);
 app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default);
-app.use("/api/auth", import_auth.default);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
