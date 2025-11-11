@@ -15,6 +15,7 @@ export default defineConfig({
         sub4: resolve(__dirname, 'playlist-country.html'),
         sub5: resolve(__dirname, 'song-whitehouse_road.html'),
         sub6: resolve(__dirname, 'subscription-free.html'),
+        sub7: resolve(__dirname, 'login.html'),
       },
     },
   },
