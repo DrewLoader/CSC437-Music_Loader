@@ -2,6 +2,8 @@
 import express, { Request, Response } from "express";
 import { connect } from "./services/mongo";
 import Playlists from "./services/playlistView-src";
+import path from "node:path";
+import { readFile } from "node:fs/promises";
 
 
 
@@ -22,6 +24,19 @@ app.listen(port, () => {
 
 connect("Music");
 
+app.get("/playlists/:name", async (req, res) => {
+  try {
+    const { name } = req.params;                    
+    const base = process.env.STATIC || "public";    
+    // file is playlist-<name>.json, case-insensitive:
+    const file = path.join(base, "data", `playlist-${name.toLowerCase()}.json`);
+    const json = await readFile(file, "utf8");
+    res.type("application/json").send(json);
+  } catch (err) {
+    console.error("playlist route error:", err);
+    res.sendStatus(404);
+  }
+});
 app.get("/playlists/:name", async (req: Request, res: Response) => {
   try {
     const name = req.params.name;
