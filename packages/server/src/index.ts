@@ -16,8 +16,9 @@ connect("Music");
 app.use(express.static(staticDir));
 app.use(express.json());
 
+
+app.use("/auth", auth);
 app.use("/api/playlists", authenticateUser, PlaylistRouter);
-app.use("/api/auth", auth);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
