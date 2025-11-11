@@ -22,14 +22,14 @@ app.listen(port, () => {
 
 connect("Music");
 
-app.get("/playlists/:name", (req: Request, res: Response) => {
-  const { name } = req.params;
-
-  Playlists.get(name).then((data) => {
-    if (data) res
-      .set("Content-Type", "application/json")
-      .send(JSON.stringify(data));
-    else res
-      .status(404).send();
-  });
+app.get("/playlists/:name", async (req: Request, res: Response) => {
+  try {
+    const name = req.params.name;
+    const doc = await Playlists.get(name);
+    if (!doc) return res.status(404).end();
+    res.json(doc);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Server error");
+  }
 });
