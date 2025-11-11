@@ -24,6 +24,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var import_express = __toESM(require("express"));
 var import_mongo = require("./services/mongo");
 var import_playlistView_src = __toESM(require("./services/playlistView-src"));
+var import_node_path = __toESM(require("node:path"));
+var import_promises = require("node:fs/promises");
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
@@ -35,6 +37,18 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 (0, import_mongo.connect)("Music");
+app.get("/playlists/:name", async (req, res) => {
+  try {
+    const { name } = req.params;
+    const base = process.env.STATIC || "public";
+    const file = import_node_path.default.join(base, "data", `playlist-${name.toLowerCase()}.json`);
+    const json = await (0, import_promises.readFile)(file, "utf8");
+    res.type("application/json").send(json);
+  } catch (err) {
+    console.error("playlist route error:", err);
+    res.sendStatus(404);
+  }
+});
 app.get("/playlists/:name", async (req, res) => {
   try {
     const name = req.params.name;
