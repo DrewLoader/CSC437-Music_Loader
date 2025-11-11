@@ -35,10 +35,14 @@ app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
 (0, import_mongo.connect)("Music");
-app.get("/playlists/:name", (req, res) => {
-  const { name } = req.params;
-  import_playlistView_src.default.get(name).then((data) => {
-    if (data) res.set("Content-Type", "application/json").send(JSON.stringify(data));
-    else res.status(404).send();
-  });
+app.get("/playlists/:name", async (req, res) => {
+  try {
+    const name = req.params.name;
+    const doc = await import_playlistView_src.default.get(name);
+    if (!doc) return res.status(404).end();
+    res.json(doc);
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Server error");
+  }
 });
