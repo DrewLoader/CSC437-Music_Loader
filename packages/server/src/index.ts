@@ -2,6 +2,7 @@
 import express, { Request, Response } from "express";
 import { connect } from "./services/mongo";
 import PlaylistRouter from "./routes/playlists";
+import auth, {authenticateUser} from "./routes/auth";
 
 
 
@@ -15,7 +16,8 @@ connect("Music");
 app.use(express.static(staticDir));
 app.use(express.json());
 
-app.use("/api/playlists", PlaylistRouter);
+app.use("/api/playlists", PlaylistRouter, authenticateUser);
+app.use("/api/auth", auth);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
