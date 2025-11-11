@@ -24,13 +24,15 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 var import_express = __toESM(require("express"));
 var import_mongo = require("./services/mongo");
 var import_playlists = __toESM(require("./routes/playlists"));
+var import_auth = __toESM(require("./routes/auth"));
 const app = (0, import_express.default)();
 const port = process.env.PORT || 3e3;
 const staticDir = process.env.STATIC || "public";
 (0, import_mongo.connect)("Music");
 app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
-app.use("/api/playlists", import_playlists.default);
+app.use("/api/playlists", import_playlists.default, import_auth.authenticateUser);
+app.use("/api/auth", import_auth.default);
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
