@@ -1,31 +1,6 @@
 // src/services/playlist-svc.ts
 import { Schema, model } from "mongoose";
-
-export type Track = { title: string; href: string; added?: string };
-
-export type PlaylistData = {
-  details: {
-    name: string;
-    ownerName: string;
-    ownerHref?: string;
-    visibility: string;
-    created: string;
-    description: string;
-  };
-  tracks: Track[];
-};
-
-
-type PlaylistRecord = {
-  name: string;
-  normalizedName: string;
-  ownerName: string;
-  ownerHref?: string;
-  visibility: string;
-  created: string;
-  description: string;
-  tracks: Track[];
-};
+import type { PlaylistView, Track } from "../models/playlist-view";
 
 const TrackSchema = new Schema<Track>(
   {
@@ -36,46 +11,46 @@ const TrackSchema = new Schema<Track>(
   { _id: false }
 );
 
-const PlaylistSchema = new Schema<PlaylistRecord>(
+const PlaylistSchema = new Schema<PlaylistView>(
   {
-    name:           { type: String, required: true, trim: true },
-    normalizedName: { type: String, required: true, index: true, unique: true },
-    ownerName:      { type: String, required: true, trim: true },
-    ownerHref:      { type: String },
-    visibility:     { type: String },
-    created:        { type: String },
-    description:    { type: String },
-    tracks:         { type: [TrackSchema], default: [] }
+    name:        { type: String, required: true, trim: true, unique: true },
+    ownerName:   { type: String, required: true, trim: true },
+    ownerHref:   { type: String },
+    visibility:  { type: String, required: true, trim: true },
+    created:     { type: String, required: true },
+    description: { type: String },
+    tracks:      { type: [TrackSchema], default: [] }
   },
   { collection: "playlists" }
 );
 
-const PlaylistModel = model<PlaylistRecord>("Playlist", PlaylistSchema);
+const PlaylistModel = model<PlaylistView>("Playlist", PlaylistSchema);
 
-function toView(doc: PlaylistRecord): PlaylistData {
-  return {
-    details: {
-      name: doc.name,
-      ownerName: doc.ownerName,
-      ownerHref: doc.ownerHref,
-      visibility: doc.visibility,
-      created: doc.created,
-      description: doc.description
-    },
-    tracks: doc.tracks
-  };
+function index(): Promise<PlaylistView[]> {
+  return PlaylistModel.find().lean();
 }
 
-async function index(): Promise<PlaylistData[]> {
-  const docs = await PlaylistModel.find().lean();
-  return docs.map((d) => toView(d as PlaylistRecord));
+function get(name: string): Promise<PlaylistView | null> {
+  return PlaylistModel.findOne({ name }).lean();
 }
 
-async function get(name: string): Promise<PlaylistData | null> {
-  const doc = await PlaylistModel
-    .findOne({ normalizedName: name.toLowerCase() })
-    .lean();
-  return doc ? toView(doc as PlaylistRecord) : null;
+async function create(doc: PlaylistView): Promise<PlaylistView> {
+  const created = await PlaylistModel.create(doc);
+  return created.toObject();
 }
 
-export default { index, get}
+async function update(name: string, updates: Partial<PlaylistView>): Promise<PlaylistView | null> {
+  const updated = await PlaylistModel.findOneAndUpdate(
+    { name },
+    updates,
+    { new: true, runValidators: true }
+  ).lean();
+  return updated;
+}
+
+async function remove(name: string): Promise<boolean> {
+  const res = await PlaylistModel.deleteOne({ name });
+  return res.deletedCount === 1;
+}
+
+export default { index, get, create, update, remove };

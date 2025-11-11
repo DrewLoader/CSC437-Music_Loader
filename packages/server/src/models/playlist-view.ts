@@ -5,4 +5,11 @@ export interface PlaylistView {
     visibility: string;
     created: string;
     description: string;
+    tracks: Track[];
+}
+
+export interface Track {
+  title: string;
+  href: string;
+  added?: string;
 }
