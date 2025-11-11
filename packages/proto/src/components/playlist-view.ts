@@ -1,5 +1,6 @@
 import { LitElement, html } from 'lit';
 import { property, state } from 'lit/decorators.js';
+import { Auth, Observer } from '@calpoly/mustang';
 import '../playlist-details';
 import '../playlist-songs';
 
@@ -22,25 +23,47 @@ export class PlaylistView extends LitElement {
   @state() private details?: PlaylistDetails;
   @state() private tracks: Track[] = [];
 
+  private _auth = new Observer<Auth.Model>(this, "music:auth");
+  private _user?: Auth.User;
+
   connectedCallback() {
     super.connectedCallback();
+    this._auth.observe((auth) => { (this._user = auth.user); });
     if (this.src) this.hydrate(this.src);
   }
 
+  protected updated(changed: Map<string, unknown>) {
+    if (changed.has('src') && this.src) {
+      this.hydrate(this.src);
+    }
+  }
+
+  private get authorization():
+    | Record<string, string>
+    | undefined {
+      return this._user?.authenticated
+        ? { Authorization: `Bearer ${(this._user as Auth.AuthenticatedUser).token}`, }
+        : undefined;
+  }
+
   hydrate(src: string) {
-    fetch(src)
+    const init: RequestInit = { headers: this.authorization };
+    fetch(src, init)
       .then((res) => {
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         return res.json();
       })
       .then((json: object) => {
         const data = helperPlaylist(json);
-        if (data) {
-          this.details = data.details;
-          this.tracks = data.tracks;
-        }
+        if (!data) throw new Error("Invalid playlist payload");
+        this.details = data.details;
+        this.tracks = data.tracks;
       })
-      .catch((err) => console.error('playlist-view hydrate failed:', err));
+      .catch((err) => {
+        console.error("playlist-view hydrate failed:", err);
+        this.details = undefined;
+        this.tracks = [];
+      });
   }
 
   render() {

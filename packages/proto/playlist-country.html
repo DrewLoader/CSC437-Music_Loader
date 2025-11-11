@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
   </head>
 <body>
+  <mu-auth provies="music:auth">
   <header>
     <div class="header-center">Playlist</div>
     <label class="mode-switch">
@@ -29,8 +30,14 @@
     <playlist-view src="/api/playlists/Country"></playlist-view>
   </main>
 
+  </mu-auth>
+
     <script type="module" src="/src/main.ts"></script>
     <script type="module" src="/scripts/dark-mode.js"></script>
+    <script type="module">
+      import { define, Auth } from "@calpoly/mustang";
+      define({ "mu-auth": Auth.Provider });
+  </script>
   </body>
 </html>
 
