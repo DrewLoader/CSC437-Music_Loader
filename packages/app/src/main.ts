@@ -16,7 +16,7 @@ const routes: Switch.Route[] = [
   // Home
   {
     path: "/app",
-    view: () => html`<landing-view></landing-view>`
+    view: () => html`<home-view></home-view>`
   },
   {
     path: "/",
