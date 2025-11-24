@@ -50,6 +50,10 @@ export class PlaylistView extends LitElement {
     const init: RequestInit = { headers: this.authorization };
     fetch(src, init)
       .then((res) => {
+        if (res.status === 401) {
+          window.location.assign("/login.html"); // prod build serves this from dist/public
+          throw new Error("Unauthorized");
+        }
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
         return res.json();
       })
