@@ -42,7 +42,8 @@ app.use("/app", async (_req, res) => {
   try {
     const indexHtml = import_node_path.default.resolve(staticDir, "index.html");
     const html = await import_promises.default.readFile(indexHtml, "utf8");
-    res.type("html").send(html);
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(html);
   } catch (err) {
     res.status(500).send(String(err));
   }
