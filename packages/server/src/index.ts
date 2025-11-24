@@ -34,7 +34,8 @@ app.use("/app", async (_req: Request, res: Response) => {
   try {
     const indexHtml = path.resolve(staticDir, "index.html");
     const html = await fs.readFile(indexHtml, "utf8");
-    res.type("html").send(html);
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.send(html);
   } catch (err) {
     res.status(500).send(String(err));
   }
