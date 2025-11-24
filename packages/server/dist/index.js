@@ -22,6 +22,8 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   mod
 ));
 var import_express = __toESM(require("express"));
+var import_promises = __toESM(require("node:fs/promises"));
+var import_node_path = __toESM(require("node:path"));
 var import_mongo = require("./services/mongo");
 var import_playlists = __toESM(require("./routes/playlists"));
 var import_auth = __toESM(require("./routes/auth"));
@@ -33,6 +35,18 @@ app.use(import_express.default.static(staticDir));
 app.use(import_express.default.json());
 app.use("/auth", import_auth.default);
 app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default);
+app.get("/", (_req, res) => {
+  res.redirect("/app");
+});
+app.use("/app", async (_req, res) => {
+  try {
+    const indexHtml = import_node_path.default.resolve(staticDir, "index.html");
+    const html = await import_promises.default.readFile(indexHtml, "utf8");
+    res.type("html").send(html);
+  } catch (err) {
+    res.status(500).send(String(err));
+  }
+});
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
