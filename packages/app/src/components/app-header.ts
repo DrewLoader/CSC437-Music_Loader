@@ -1,39 +1,30 @@
+// app/src/components/app-header.ts
 import { LitElement, html } from "lit";
 
 export class AppHeader extends LitElement {
   createRenderRoot() { return this; }
 
+  connectedCallback() {
+    super.connectedCallback();
+    const checkbox = this.querySelector('label.mode-switch input[type="checkbox"]') as HTMLInputElement | null;
+    if (checkbox) {
+      checkbox.addEventListener("change", (e) => {
+        const checked = (e.target as HTMLInputElement).checked;
+        document.body.classList.toggle("dark-mode", !!checked);
+      });
+    }
+  }
+
   render() {
     return html`
       <header>
-        <div class="header-center">Music</div>
+        <div class="header-center">Listeners</div>
         <label class="mode-switch">
-          <input id="dark-toggle" type="checkbox" autocomplete="off" />
+          <input type="checkbox" autocomplete="off" />
           Dark mode
         </label>
       </header>
     `;
   }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    const checkbox =
-      this.querySelector<HTMLInputElement>('#dark-toggle');
-
-    if (checkbox) {
-      // Restore persisted choice (optional)
-      const saved = localStorage.getItem("dark-mode") === "true";
-      document.body.classList.toggle("dark-mode", saved);
-      checkbox.checked = saved;
-
-      checkbox.addEventListener("change", () => {
-        const on = checkbox.checked;
-        document.body.classList.toggle("dark-mode", on);
-        localStorage.setItem("dark-mode", String(on));
-      });
-    }
-  }
 }
-
 customElements.define("app-header", AppHeader);
