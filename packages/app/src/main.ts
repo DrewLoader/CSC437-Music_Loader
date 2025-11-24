@@ -29,5 +29,6 @@ define({
     constructor() {
       super(routes, "music:history", "music:auth");
     }
-  }
+  },
+  "app-header": customElements.get("app-header")!
 });
