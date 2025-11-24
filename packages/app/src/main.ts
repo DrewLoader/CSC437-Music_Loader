@@ -1,27 +1,33 @@
 import { Auth, define, History, Switch } from "@calpoly/mustang";
-import { html } from "lit";
+import { html, LitElement } from "lit";
 import "./components/app-header";
-import "./components/playlist-view";     
-import "./views/home-view";        
+import "./views/landing-view";
+import "./views/playlist-view";
 
 const routes: Switch.Route[] = [
   {
     path: "/app/playlist/:name",
-    view: (params) =>
-      html`<playlist-view src=${`/api/playlists/${encodeURIComponent(params.name)}`}></playlist-view>`
+    view: (params: Switch.Params) => html`
+      <playlist-view playlist-name=${params.name}></playlist-view>
+    `
   },
+  // Home
   {
     path: "/app",
-    view: () => html`<home-view></home-view>`
+    view: () => html`<landing-view></landing-view>`
   },
-  { path: "/", redirect: "/app" }
+  {
+    path: "/",
+    redirect: "/app"
+  }
 ];
 
 define({
   "mu-auth": Auth.Provider,
   "mu-history": History.Provider,
-  "mu-switch": class extends Switch.Element {
-    constructor() { super(routes, "music:history", "music:auth"); }
-  },
-  "app-header": customElements.get("app-header")!
+  "mu-switch": class AppSwitch extends Switch.Element {
+    constructor() {
+      super(routes, "music:history", "music:auth");
+    }
+  }
 });

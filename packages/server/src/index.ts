@@ -30,15 +30,10 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 
-app.use("/app", async (_req: Request, res: Response) => {
-  try {
-    const indexHtml = path.resolve(staticDir, "index.html");
-    const html = await fs.readFile(indexHtml, "utf8");
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(html);
-  } catch (err) {
-    res.status(500).send(String(err));
-  }
+app.use("/app", (req, res) => {
+  const staticDir = process.env.STATIC || path.resolve(__dirname, "../../app/dist");
+  const indexHtml = path.resolve(staticDir, "index.html");
+  fs.readFile(indexHtml, { encoding: "utf8" }).then((html) => res.send(html));
 });
 
 app.listen(port, () => {
