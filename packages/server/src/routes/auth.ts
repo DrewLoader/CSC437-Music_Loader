@@ -16,7 +16,7 @@ const TOKEN_SECRET: string =
   process.env.TOKEN_SECRET || "NOT_A_SECRET";
 
   router.post("/register", (req: Request, res: Response) => {
-  const { username, password } = req.body; // from form
+  const { username, password } = req.body;
 
   if ( typeof username !== "string" ||
     typeof password !== "string"
@@ -36,7 +36,7 @@ const TOKEN_SECRET: string =
 });
 
 router.post("/login", (req: Request, res: Response) => {
-  const { username, password } = req.body; // from form
+  const { username, password } = req.body;
 
   if (!username || !password) {
     res.status(400).send("Bad request: Invalid input data.");

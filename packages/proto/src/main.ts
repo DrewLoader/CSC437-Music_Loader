@@ -7,3 +7,4 @@ import './playlist-details';
 import './playlist-songs';
 import './song-details';
 import './components/playlist-view.ts'
+import './components/app-header.ts';
