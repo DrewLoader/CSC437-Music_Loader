@@ -4,7 +4,8 @@
     <meta charset="utf-8" />
     <title>Login</title>
     <script type="module">
-      import { define, Auth } from "@calpoly/mustang";
+      import { define, Auth } from "https://esm.sh/@calpoly/mustang";
+
       define({ "mu-auth": Auth.Provider });
 
       async function handleLogin(e) {
@@ -25,7 +26,7 @@
         }
         const { token } = await res.json();
 
-        // Tell <mu-auth> we’re signed in (and where to go next)
+        // Tell <mu-auth> to store the token and go to Country
         const ev = new CustomEvent("auth:message", {
           bubbles: true,
           composed: true,
