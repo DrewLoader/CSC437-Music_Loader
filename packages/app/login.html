@@ -1,54 +1,43 @@
 <!doctype html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <title>Login</title>
-    <script type="module">
-      import { define, Auth } from "https://esm.sh/@calpoly/mustang";
 
-      define({ "mu-auth": Auth.Provider });
+    <!-- your fonts + CSS tokens/reset/page as needed -->
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
 
-      async function handleLogin(e) {
-        e.preventDefault();
-        const form = e.target;
-        const username = form.username.value;
-        const password = form.password.value;
-
-        const res = await fetch("/auth/login", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, password })
-        });
-
-        if (!res.ok) {
-          alert("Login failed");
-          return;
-        }
-        const { token } = await res.json();
-
-
-        const ev = new CustomEvent("auth:message", {
-          bubbles: true,
-          composed: true,
-          detail: ["auth/signin", { token, redirect: "/app/playlist/Country" }]
-        });
-        document.querySelector("mu-auth")?.dispatchEvent(ev);
-      }
-
-      window.addEventListener("DOMContentLoaded", () => {
-        document.getElementById("login-form").addEventListener("submit", handleLogin);
-      });
-    </script>
+    <!-- Vite will load and bundle this -->
+    <script type="module" src="/src/login.ts"></script>
   </head>
-  <body>
+  <body class="page">
+    <!-- IMPORTANT: provides must match your app (e.g., "music:auth") -->
     <mu-auth provides="music:auth">
-      <h2>Login</h2>
-      <form id="login-form">
-        <label>Username <input name="username" autocomplete="off" /></label>
-        <label>Password <input name="password" type="password" /></label>
-        <button type="submit">Login</button>
-      </form>
-      <p><a href="/newuser.html">Create account</a></p>
+      <main class="card" style="max-width: 420px; margin: 3rem auto;">
+        <h2>Sign in</h2>
+
+        <form id="login-form">
+          <label style="display:block; margin: 0.5rem 0;">
+            <span>Username</span><br />
+            <input name="username" autocomplete="off" />
+          </label>
+
+          <label style="display:block; margin: 0.5rem 0;">
+            <span>Password</span><br />
+            <input name="password" type="password" />
+          </label>
+
+          <button type="submit" style="margin-top: 1rem;">Login</button>
+
+          <p id="login-error" style="color: var(--color-error);"></p>
+        </form>
+
+        <p style="margin-top:1rem;">
+          New here? <a href="/newuser.html">Create an account</a>
+        </p>
+      </main>
     </mu-auth>
   </body>
 </html>
