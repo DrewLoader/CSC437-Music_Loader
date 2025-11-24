@@ -1,4 +1,4 @@
-// src/routes/auth.js
+// src/routes/auth.ts
 import dotenv from "dotenv";
 import express, {
   NextFunction,

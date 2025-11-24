@@ -1,40 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <script type="module">
-    import { define, Auth } from "@calpoly/mustang";
-    import { LoginFormElement } from "/src/auth/login-form";
+<!doctype html>
+<html>
+  <body>
+    <form id="login">
+      <label>Username <input name="username" autocomplete="off" /></label>
+      <label>Password <input type="password" name="password" /></label>
+      <button type="submit">Login</button>
+    </form>
 
-    define({
-      "mu-auth": Auth.Provider,
-      "login-form": LoginFormElement
-    });
-  </script>
-</head>
-<body class="page">
-  <mu-auth>
-    <h2>User Login</h2>
-      <main class="card">
-        <login-form api="/auth/login">
-          <label>
-            <span>Username:</span>
-            <input name="username" autocomplete="off" />
-          </label>
-          <label>
-            <span>Password:</span>
-            <input type="password" name="password" />
-          </label>
-        </login-form>
-      </main>
-      <p
-        >Or did you want to
-            <a href="newuser.html">Sign up as a new user</a>?
-      </p>
-    </mu-auth>
+    <script type="module">
+      import { Auth, define } from "@calpoly/mustang";
+      define({ "mu-auth": Auth.Provider });
+      const host = document.createElement("mu-auth");
+      document.body.prepend(host);
+
+      const form = document.getElementById("login");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const fd = new FormData(form);
+        const body = {
+          username: fd.get("username"),
+          password: fd.get("password")
+        };
+        const res = await fetch("/auth/login", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) return alert("Login failed");
+        const { token } = await res.json();
+
+        const ev = new CustomEvent("auth:message", {
+          bubbles: true,
+          composed: true,
+          detail: ["auth/signin", { token, redirect: "/app/playlist/Country" }]
+        });
+        host.dispatchEvent(ev);
+      });
+    </script>
   </body>
-  <script type="module">
-    import { define, Auth } from "@calpoly/mustang";
-    define({ "mu-auth": Auth.Provider });
-  </script>
 </html>
