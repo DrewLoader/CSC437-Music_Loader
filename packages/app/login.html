@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Login</title>
+
+    <link rel="stylesheet" href="/styles/tokens.css" />
+    <link rel="stylesheet" href="/styles/reset.css" />
+    <link rel="stylesheet" href="/styles/page.css" />
+
+    <!-- Vite will load and bundle this -->
+    <script type="module" src="/src/login.ts"></script>
+  </head>
+  <body class="page">
+    <!-- IMPORTANT: provides must match your app (e.g., "music:auth") -->
+    <mu-auth provides="music:auth">
+      <main class="card" style="max-width: 420px; margin: 3rem auto;">
+        <h2>Sign in</h2>
+
+        <form id="login-form">
+          <label style="display:block; margin: 0.5rem 0;">
+            <span>Username</span><br />
+            <input name="username" autocomplete="off" />
+          </label>
+
+          <label style="display:block; margin: 0.5rem 0;">
+            <span>Password</span><br />
+            <input name="password" type="password" />
+          </label>
+
+          <button type="submit" style="margin-top: 1rem;">Login</button>
+
+          <p id="login-error" style="color: var(--color-error);"></p>
+        </form>
+
+        <p style="margin-top:1rem;">
+          New here? <a href="/newuser.html">Create an account</a>
+        </p>
+      </main>
+    </mu-auth>
+  </body>
+</html>
