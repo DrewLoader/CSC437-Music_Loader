@@ -38,15 +38,10 @@ app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default
 app.get("/", (_req, res) => {
   res.redirect("/app");
 });
-app.use("/app", async (_req, res) => {
-  try {
-    const indexHtml = import_node_path.default.resolve(staticDir, "index.html");
-    const html = await import_promises.default.readFile(indexHtml, "utf8");
-    res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.send(html);
-  } catch (err) {
-    res.status(500).send(String(err));
-  }
+app.use("/app", (req, res) => {
+  const staticDir2 = process.env.STATIC || import_node_path.default.resolve(__dirname, "../../app/dist");
+  const indexHtml = import_node_path.default.resolve(staticDir2, "index.html");
+  import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then((html) => res.send(html));
 });
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

@@ -3,12 +3,14 @@ import { html, LitElement } from "lit";
 import "./components/app-header";
 import "./views/home-view";
 import "./components/playlist-view";
+import "./components/playlist-details";
+import "./components/playlist-songs";
 
 const routes: Switch.Route[] = [
   {
     path: "/app/playlist/:name",
-    view: (params: Switch.Params) => html`
-      <playlist-view playlist-name=${params.name}></playlist-view>
+    view: (p: Switch.Params) => html`
+      <playlist-view src=${`/api/playlists/${encodeURIComponent(p.name)}`}></playlist-view>
     `
   },
   // Home

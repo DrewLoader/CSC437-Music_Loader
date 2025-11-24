@@ -7,12 +7,8 @@ export class AppHeader extends LitElement {
     return html`
       <header>
         <div class="header-center">Music</div>
-        <nav>
-          <a href="/app">Home</a>
-          <a href="/app/playlist/Country">Country</a>
-        </nav>
         <label class="mode-switch">
-          <input id="dm" type="checkbox" autocomplete="off" />
+          <input id="dark-toggle" type="checkbox" autocomplete="off" />
           Dark mode
         </label>
       </header>
@@ -21,14 +17,22 @@ export class AppHeader extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    const body = document.body;
-    const box = this.querySelector<HTMLInputElement>("#dm");
-    if (!box) return;
 
-    box.addEventListener("change", (e) => {
-      const checked = (e.target as HTMLInputElement).checked;
-      body.classList.toggle("dark-mode", checked);
-    });
+    const checkbox =
+      this.querySelector<HTMLInputElement>('#dark-toggle');
+
+    if (checkbox) {
+      // Restore persisted choice (optional)
+      const saved = localStorage.getItem("dark-mode") === "true";
+      document.body.classList.toggle("dark-mode", saved);
+      checkbox.checked = saved;
+
+      checkbox.addEventListener("change", () => {
+        const on = checkbox.checked;
+        document.body.classList.toggle("dark-mode", on);
+        localStorage.setItem("dark-mode", String(on));
+      });
+    }
   }
 }
 
