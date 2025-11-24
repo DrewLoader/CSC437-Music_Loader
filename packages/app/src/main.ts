@@ -1,8 +1,8 @@
 import { Auth, define, History, Switch } from "@calpoly/mustang";
 import { html, LitElement } from "lit";
 import "./components/app-header";
-import "./views/landing-view";
-import "./views/playlist-view";
+import "./views/home-view";
+import "./components/playlist-view";
 
 const routes: Switch.Route[] = [
   {
