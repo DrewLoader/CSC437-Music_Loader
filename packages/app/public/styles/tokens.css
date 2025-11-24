@@ -14,7 +14,9 @@
 
     --font-sans: var(--font-body);
 
-    body.dark-mode {
+}
+
+body.dark-mode {
         --color-bg: #0b0f14;
         --color-surface: #121826;
         --color-border: #263241;
@@ -24,5 +26,3 @@
         --color-accent: #7aa2ff;
         --color-link: var(--color-accent);
     }
-
-}
