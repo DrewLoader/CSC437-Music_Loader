@@ -6,22 +6,42 @@ define({
   "login-form": Form.Element
 });
 setTimeout(() => {
-  const form = document.querySelector("login-form");
-  console.log("login-form element:", form);
+  const loginForm = document.querySelector("login-form");
   
-  if (form) {
-    const shadowRoot = form.shadowRoot;
-    console.log("Shadow root:", shadowRoot);
-    if (shadowRoot) {
-      const actualForm = shadowRoot.querySelector("form");
-      console.log("Actual <form> inside:", actualForm);
-      
-      // Listen for submit events
-      if (actualForm) {
-        actualForm.addEventListener("submit", (e) => {
-          console.log("Form submit event detected!", e);
-        });
-      }
+  if (loginForm && loginForm.shadowRoot) {
+    const form = loginForm.shadowRoot.querySelector("form");
+    
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        console.log("Submit intercepted!");
+        
+        const formData = new FormData(form);
+        const username = formData.get("username");
+        const password = formData.get("password");
+        
+        console.log("Submitting:", { username, password });
+        
+        try {
+          const response = await fetch("/auth/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password })
+          });
+          
+          const data = await response.json();
+          console.log("Login response:", data);
+          
+          if (data.token) {
+            // Store the token
+            localStorage.setItem("music:auth.token", data.token);
+            // Redirect to app
+            window.location.href = "/app";
+          }
+        } catch (error) {
+          console.error("Login error:", error);
+        }
+      });
     }
   }
 }, 1000);
