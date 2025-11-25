@@ -16,24 +16,23 @@ setTimeout(() => {
         e.preventDefault();
         console.log("Submit intercepted!");
         
-        const formData = new FormData(form);
-        const username = formData.get("username");
-        const password = formData.get("password");
+        // Get inputs from the light DOM (the actual page)
+        const usernameInput = loginForm.querySelector('input[name="username"]') as HTMLInputElement;
+        const passwordInput = loginForm.querySelector('input[name="password"]') as HTMLInputElement;
+        
+        const username = usernameInput?.value;
+        const password = passwordInput?.value;
         
         console.log("Username value:", username);
         console.log("Password value:", password);
-        console.log("Username type:", typeof username);
-        console.log("Password type:", typeof password);
         
-        // Log all form data
-        console.log("All form data:");
-        for (let [key, value] of formData.entries()) {
-          console.log(key, value);
+        if (!username || !password) {
+          console.error("Username or password is empty!");
+          return;
         }
         
         const payload = { username, password };
-        console.log("Sending payload:", payload);
-        console.log("Payload JSON:", JSON.stringify(payload));
+        console.log("Sending payload:", JSON.stringify(payload));
         
         try {
           const response = await fetch("/auth/login", {
@@ -48,17 +47,12 @@ setTimeout(() => {
           console.log("Response text:", text);
           
           if (response.ok) {
-            let data;
-            try {
-              data = JSON.parse(text);
-              console.log("Login response:", data);
-              
-              if (data.token) {
-                localStorage.setItem("music:auth.token", data.token);
-                window.location.href = "/app";
-              }
-            } catch {
-              console.error("Response was not JSON:", text);
+            const data = JSON.parse(text);
+            console.log("Login response:", data);
+            
+            if (data.token) {
+              localStorage.setItem("music:auth.token", data.token);
+              window.location.href = "/app";
             }
           } else {
             console.error("Login failed:", text);
