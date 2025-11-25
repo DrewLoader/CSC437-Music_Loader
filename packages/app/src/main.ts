@@ -6,6 +6,9 @@ import "./components/playlist-view";
 import "./components/playlist-details";
 import "./components/playlist-songs";
 
+console.log("App loading, checking token...");
+console.log("Token in localStorage:", localStorage.getItem("mu:auth:jwt"));
+
 const routes: Switch.Route[] = [
   {
     path: "/app/playlist/:name",
@@ -13,7 +16,6 @@ const routes: Switch.Route[] = [
       <playlist-view src=${`/api/playlists/${encodeURIComponent(p.name)}`}></playlist-view>
     `
   },
-  // Home
   {
     path: "/app",
     view: () => html`<home-view></home-view>`
