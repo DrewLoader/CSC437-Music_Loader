@@ -28,7 +28,10 @@ export class PlaylistView extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    this._auth.observe((auth) => { (this._user = auth.user); });
+    this._auth.observe((auth) => { 
+      this._user = auth.user;
+      console.log("Auth updated:", auth.user);
+    });
     if (this.src) this.hydrate(this.src);
   }
 
@@ -38,20 +41,36 @@ export class PlaylistView extends LitElement {
     }
   }
 
-  private get authorization():
-    | Record<string, string>
-    | undefined {
-      return this._user?.authenticated
-        ? { Authorization: `Bearer ${(this._user as Auth.AuthenticatedUser).token}`, }
-        : undefined;
+  private get authorization(): Record<string, string> | undefined {
+    // First try to get from authenticated user
+    if (this._user?.authenticated) {
+      return { 
+        Authorization: `Bearer ${(this._user as Auth.AuthenticatedUser).token}` 
+      };
+    }
+    
+    // Fallback: get token directly from localStorage
+    const token = localStorage.getItem("mu:auth:jwt");
+    if (token) {
+      console.log("Using token from localStorage");
+      return { Authorization: `Bearer ${token}` };
+    }
+    
+    console.warn("No authentication token found");
+    return undefined;
   }
 
   hydrate(src: string) {
-    const init: RequestInit = { headers: this.authorization };
+    const headers = this.authorization;
+    console.log("Fetching with headers:", headers);
+    
+    const init: RequestInit = { headers };
+    
     fetch(src, init)
       .then((res) => {
         if (res.status === 401) {
-          window.location.assign("/login.html"); // prod build serves this from dist/public
+          console.error("401 Unauthorized - redirecting to login");
+          window.location.assign("/login.html");
           throw new Error("Unauthorized");
         }
         if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
