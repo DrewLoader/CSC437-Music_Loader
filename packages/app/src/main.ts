@@ -1,5 +1,5 @@
 import { Auth, define, History, Switch } from "@calpoly/mustang";
-import { html, LitElement } from "lit";
+import { html } from "lit";
 import "./components/app-header";
 import "./views/home-view";
 import "./components/playlist-view";
