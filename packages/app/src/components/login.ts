@@ -48,14 +48,15 @@ setTimeout(() => {
             console.log("Login response:", data);
             
             if (data.token) {
-              // Dispatch auth event so mu-auth can handle it
-              const authEvent = new CustomEvent("auth:message", {
-                bubbles: true,
-                composed: true,
-                detail: ["auth/signin", { token: data.token, redirect: "/app" }]
-              });
+              console.log("Token received:", data.token);
               
-              loginForm.dispatchEvent(authEvent);
+              // Store in the format mu-auth expects
+              localStorage.setItem("mu:auth:jwt", data.token);
+              
+              console.log("Token stored, redirecting...");
+              
+              // Redirect to app
+              window.location.href = "/app";
             }
           } else {
             const text = await response.text();
