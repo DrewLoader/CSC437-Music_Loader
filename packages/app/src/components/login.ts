@@ -15,6 +15,13 @@ setTimeout(() => {
     if (shadowRoot) {
       const actualForm = shadowRoot.querySelector("form");
       console.log("Actual <form> inside:", actualForm);
+      
+      // Listen for submit events
+      if (actualForm) {
+        actualForm.addEventListener("submit", (e) => {
+          console.log("Form submit event detected!", e);
+        });
+      }
     }
   }
 }, 1000);
