@@ -5,7 +5,16 @@ define({
   "mu-auth": Auth.Provider,
   "login-form": Form.Element
 });
-
-console.log("Defined elements:");
-console.log("mu-auth:", customElements.get("mu-auth"));
-console.log("login-form:", customElements.get("login-form"));
+setTimeout(() => {
+  const form = document.querySelector("login-form");
+  console.log("login-form element:", form);
+  
+  if (form) {
+    const shadowRoot = form.shadowRoot;
+    console.log("Shadow root:", shadowRoot);
+    if (shadowRoot) {
+      const actualForm = shadowRoot.querySelector("form");
+      console.log("Actual <form> inside:", actualForm);
+    }
+  }
+}, 1000);
