@@ -1,8 +1,32 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+/* Make custom elements display as block by default */
+playlist-view,
+playlist-details,
+home-view,
+app-header {
+  display: block;
+}
+
+/* BUT playlist-songs should display as contents to not break ul > li structure */
+playlist-songs {
+  display: contents;
+}
+
+article.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 header {
@@ -95,33 +119,6 @@ ul.list {
   margin-bottom: 12px;
 }
 
-/* Playlist Details Styles */
-playlist-details {
-  display: block;
-}
-
-playlist-details dl {
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  gap: 8px 16px;
-  margin: 0;
-}
-
-playlist-details dt {
-  font-weight: 600;
-  color: var(--color-accent);
-  margin: 0;
-}
-
-playlist-details dd {
-  margin: 0;
-}
-
-/* Playlist Songs Styles */
-playlist-songs {
-  display: block;
-}
-
 dl.two {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -144,20 +141,26 @@ dl.two dd {
   margin: 0 auto;
 }
 
-/* Make sure playlist-view renders as a block */
-playlist-view {
-  display: block;
-  padding: 16px;
-}
-
 @media (max-width: 900px) {
-  .grid { grid-template-columns: repeat(8, 1fr); }
-  .sidebar { grid-column: 1 / span 2; }
-  .content { grid-column: 3 / span 6; }
+  .grid { 
+    grid-template-columns: repeat(8, 1fr);
+  }
+  .sidebar { 
+    grid-column: 1 / span 2;
+  }
+  .content { 
+    grid-column: 3 / span 6;
+  }
 }
 
 @media (max-width: 600px) {
-  .grid { grid-template-columns: repeat(4, 1fr); }
-  .sidebar { grid-column: 1 / span 4; }
-  .content { grid-column: 1 / span 4; }
+  .grid { 
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .sidebar { 
+    grid-column: 1 / span 4;
+  }
+  .content { 
+    grid-column: 1 / span 4;
+  }
 }
