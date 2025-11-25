@@ -16,7 +16,7 @@ setTimeout(() => {
         e.preventDefault();
         console.log("Submit intercepted!");
         
-        // Get inputs from the light DOM (the actual page)
+        // Get inputs from the light DOM
         const usernameInput = loginForm.querySelector('input[name="username"]') as HTMLInputElement;
         const passwordInput = loginForm.querySelector('input[name="password"]') as HTMLInputElement;
         
@@ -43,19 +43,24 @@ setTimeout(() => {
           
           console.log("Response status:", response.status);
           
-          const text = await response.text();
-          console.log("Response text:", text);
-          
           if (response.ok) {
-            const data = JSON.parse(text);
+            const data = await response.json();
             console.log("Login response:", data);
             
             if (data.token) {
-              localStorage.setItem("music:auth.token", data.token);
-              window.location.href = "/app";
+              // Dispatch auth event so mu-auth can handle it
+              const authEvent = new CustomEvent("auth:message", {
+                bubbles: true,
+                composed: true,
+                detail: ["auth/signin", { token: data.token, redirect: "/app" }]
+              });
+              
+              loginForm.dispatchEvent(authEvent);
             }
           } else {
+            const text = await response.text();
             console.error("Login failed:", text);
+            alert("Login failed: " + text);
           }
         } catch (error) {
           console.error("Login error:", error);
