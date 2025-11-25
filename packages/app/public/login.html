@@ -3,13 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Login - Country Playlist</title>
+  <title>Login - Music Playlist</title>
   
   <link rel="stylesheet" href="/styles/tokens.css" />
   <link rel="stylesheet" href="/styles/reset.css" />
   <link rel="stylesheet" href="/styles/page.css" />
-  
-  <script type="module" src="/login.ts"></script>
 </head>
 <body class="page">
   <mu-auth provides="music:auth">
@@ -25,6 +23,7 @@
             <span>Password:</span>
             <input type="password" name="password" />
           </label>
+          <button type="submit">Sign In</button>
         </login-form>
       </main>
       <p>
@@ -33,5 +32,14 @@
       </p>
     </article>
   </mu-auth>
+  
+  <script type="module">
+    import { Auth, define, Form } from "@calpoly/mustang";
+    
+    define({
+      "mu-auth": Auth.Provider,
+      "login-form": Form.Element
+    });
+  </script>
 </body>
 </html>
