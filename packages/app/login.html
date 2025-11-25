@@ -17,15 +17,17 @@
       <h2>User Login</h2>
       <main class="card">
         <login-form api="/auth/login">
+          <slot name="title">
+            <h3>Sign In</h3>
+          </slot>
           <label>
-            <span>Username:</span>
-            <input name="username" autocomplete="off" />
+            <span>Username</span>
+            <input name="username" />
           </label>
           <label>
-            <span>Password:</span>
+            <span>Password</span>
             <input type="password" name="password" />
           </label>
-          <!-- Remove the <button> here - login-form provides its own -->
         </login-form>
       </main>
       <p>
