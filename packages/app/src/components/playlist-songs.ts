@@ -30,16 +30,11 @@ export class PlaylistSongs extends LitElement {
       fill: currentColor;
     }
 
-    a {
+    .track-title {
       flex: 1;
-      color: var(--color-link);
-      text-decoration: none;
+      color: var(--color-text);
       font-weight: 500;
       font-size: 1rem;
-    }
-
-    a:hover {
-      text-decoration: underline;
     }
 
     small {
@@ -55,7 +50,7 @@ export class PlaylistSongs extends LitElement {
         <svg class="icon" aria-hidden="true">
           <use href="/icons/music.svg#icon-record"></use>
         </svg>
-        <a href="${this.href}">${this.title}</a>
+        <span class="track-title">${this.title}</span>
         ${this.added ? html`<small>Added ${this.added}</small>` : ""}
       </li>
     `;
