@@ -1,6 +1,7 @@
 import { PlaylistView, Track } from "server/models";
 
 export type Msg =
+  | ["playlists/request"]
   | ["playlist/request", { name: string }]
   | ["playlist/save", { 
       name: string; 
@@ -13,5 +14,6 @@ export type Msg =
   | Cmd;
 
 type Cmd =
+  | ["playlists/load", { playlists: PlaylistView[] }]
   | ["playlist/load", { name: string; playlist: PlaylistView }]
   | ["track/added", { playlistName: string; track: Track }];

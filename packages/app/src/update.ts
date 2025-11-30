@@ -11,6 +11,23 @@ export default function update(
   const [command, payload, callbacks] = message;
   
   switch (command) {
+    case "playlists/request": {
+      return [
+        model,
+        requestPlaylists(user)
+          .then((playlists) => ["playlists/load", { playlists }])
+      ];
+    }
+    
+    case "playlists/load": {
+      const { playlists } = payload;
+      return { 
+        ...model, 
+        playlists,
+        username: (user as Auth.AuthenticatedUser)?.username 
+      };
+    }
+    
     case "playlist/request": {
       const { name } = payload;
       if (model.playlist?.name === name) break;
@@ -64,6 +81,25 @@ export default function update(
   }
   
   return model;
+}
+
+function requestPlaylists(user: Auth.User): Promise<PlaylistView[]> {
+  return fetch("/api/playlists", {
+    headers: Auth.headers(user)
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      if (response.status === 401) {
+        window.location.assign("/login.html");
+      }
+      throw new Error(`Server responded with status ${response.status}`);
+    })
+    .then((json: unknown) => {
+      if (Array.isArray(json)) {
+        return json.map(item => helperPlaylist(item));
+      }
+      throw new Error("Invalid playlists response");
+    });
 }
 
 function requestPlaylist(
