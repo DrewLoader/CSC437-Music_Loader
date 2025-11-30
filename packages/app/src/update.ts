@@ -1,4 +1,4 @@
-import { Auth, ThenUpdate } from "@calpoly/mustang";
+import { Auth, ThenUpdate, Message } from "@calpoly/mustang";
 import { Msg } from "./message";
 import { Model } from "./model";
 import { PlaylistView, Track } from "server/models";
@@ -8,30 +8,44 @@ export default function update(
   model: Model,
   user: Auth.User
 ): Model | ThenUpdate<Model, Msg> {
-  switch (message[0]) {
+  const [command, payload, callbacks] = message;
+  
+  switch (command) {
     case "playlist/request": {
-      const { name } = message[1];
+      const { name } = payload;
       if (model.playlist?.name === name) break;
       return [
         { ...model, playlist: undefined },
-        requestPlaylist(message[1], user)
+        requestPlaylist(payload, user)
           .then((playlist) => ["playlist/load", { name, playlist }])
       ];
     }
+    
     case "playlist/load": {
-      const { playlist } = message[1];
+      const { playlist } = payload;
       return { ...model, playlist };
     }
-    case "track/save": {
-      const { playlistName } = message[1];
+    
+    case "playlist/save": {
+      const { name } = payload;
       return [
         model,
-        saveTrack(message[1], user)
+        savePlaylist(payload, user, callbacks || {})
+          .then((playlist) => ["playlist/load", { name, playlist }])
+      ];
+    }
+    
+    case "track/save": {
+      const { playlistName } = payload;
+      return [
+        model,
+        saveTrack(payload, user)
           .then((savedTrack) => ["track/added", { playlistName, track: savedTrack }])
       ];
     }
+    
     case "track/added": {
-      const { playlistName, track } = message[1];
+      const { playlistName, track } = payload;
       if (model.playlist && model.playlist.name === playlistName) {
         return {
           ...model,
@@ -43,10 +57,12 @@ export default function update(
       }
       return model;
     }
+    
     default:
-      const unhandled: never = message[0];
+      const unhandled: never = command;
       throw new Error(`Unhandled message "${unhandled}"`);
   }
+  
   return model;
 }
 
@@ -66,6 +82,39 @@ function requestPlaylist(
     })
     .then((json: unknown) => {
       return helperPlaylist(json);
+    });
+}
+
+function savePlaylist(
+  msg: {
+    name: string;
+    playlist: Partial<PlaylistView>;
+  },
+  user: Auth.User,
+  callbacks: Message.Reactions
+): Promise<PlaylistView> {
+  return fetch(`/api/playlists/${encodeURIComponent(msg.name)}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+    body: JSON.stringify(msg.playlist)
+  })
+    .then((response: Response) => {
+      if (response.status === 200) return response.json();
+      throw new Error(`Failed to save playlist ${msg.name}`);
+    })
+    .then((json: unknown) => {
+      if (json) {
+        if (callbacks.onSuccess) callbacks.onSuccess();
+        return json as PlaylistView;
+      }
+      throw new Error("No JSON in API response");
+    })
+    .catch((err) => {
+      if (callbacks.onFailure) callbacks.onFailure(err);
+      throw err;
     });
 }
 

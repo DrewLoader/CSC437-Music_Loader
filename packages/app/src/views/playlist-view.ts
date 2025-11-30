@@ -6,7 +6,7 @@ import { Msg } from "../message";
 import { Model } from "../model";
 import "../components/playlist-details";
 import "../components/playlist-songs";
-import "../components/track-view";
+import "../components/track-form";
 
 export class PlaylistViewElement extends View<Model, Msg> {
   @property({ attribute: "playlist-name" })
@@ -55,6 +55,27 @@ export class PlaylistViewElement extends View<Model, Msg> {
       font-size: 1.75rem;
     }
 
+    .section-header button {
+      margin-left: auto;
+      padding: 8px 16px;
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .section-header button:hover {
+      opacity: 0.9;
+    }
+
+    .section-header a {
+      margin-left: auto;
+      text-decoration: none;
+    }
+
     ul {
       list-style: none;
       padding: 0;
@@ -64,6 +85,7 @@ export class PlaylistViewElement extends View<Model, Msg> {
 
   constructor() {
     super("music:model");
+    console.log("PlaylistView constructor called");
   }
 
   attributeChangedCallback(
@@ -72,12 +94,13 @@ export class PlaylistViewElement extends View<Model, Msg> {
     newValue: string
   ) {
     super.attributeChangedCallback(name, oldValue, newValue);
+    console.log("attributeChangedCallback:", { name, oldValue, newValue });
     if (
       name === "playlist-name" &&
       oldValue !== newValue &&
       newValue
     ) {
-      console.log("Requesting playlist:", newValue);
+      console.log("Dispatching playlist/request for:", newValue);
       this.dispatchMessage([
         "playlist/request",
         { name: newValue }
@@ -87,6 +110,7 @@ export class PlaylistViewElement extends View<Model, Msg> {
 
   render() {
     const { playlist, playlistName } = this;
+    console.log("Rendering playlist-view:", { playlist, playlistName });
 
     if (!playlist) {
       return html`<p>Loading...</p>`;
@@ -99,6 +123,9 @@ export class PlaylistViewElement extends View<Model, Msg> {
             <use href="/icons/music.svg#icon-playlist"></use>
           </svg>
           <h2>Details</h2>
+          <a href="/app/playlist/${playlistName}/edit">
+            <button>Edit</button>
+          </a>
         </div>
         <playlist-details
           name=${playlist.name}
