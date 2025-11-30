@@ -1,6 +1,6 @@
 // src/routes/playlists.ts
 import express, { Request, Response } from "express";
-import { PlaylistView } from "../models/playlist-view";
+import { PlaylistView, Track } from "../models/playlist-view";
 import Playlists from "../services/playlistView-src";
 
 const router = express.Router();    
@@ -19,6 +19,35 @@ router.get("/:name", async (req: Request, res: Response) => {
     const item = await Playlists.get(req.params.name);
     if (!item) return res.sendStatus(404);
     res.json(item);
+  } catch (err) {
+    res.status(500).send(String(err));
+  }
+});
+
+// NEW: Add track to playlist
+router.post("/:name/tracks", async (req: Request, res: Response) => {
+  try {
+    const { name } = req.params;
+    const track = req.body as Track;
+    
+    // Validate the track data
+    if (!track.title || !track.href) {
+      return res.status(400).send("Track must have title and href");
+    }
+
+    // Add current date if not provided
+    if (!track.added) {
+      track.added = new Date().toISOString().split('T')[0];
+    }
+
+    const updatedPlaylist = await Playlists.addTrack(name, track);
+    
+    if (!updatedPlaylist) {
+      return res.status(404).send("Playlist not found");
+    }
+    
+    // Return the added track
+    res.status(201).json(track);
   } catch (err) {
     res.status(500).send(String(err));
   }
@@ -52,7 +81,6 @@ router.post("/", async (req: Request, res: Response) => {
   }
 });
 
-
 router.put("/:name", async (req: Request, res: Response) => {
   try {
     const updated = await Playlists.update(req.params.name, req.body as Partial<PlaylistView>);
@@ -62,7 +90,6 @@ router.put("/:name", async (req: Request, res: Response) => {
     res.status(500).send(String(err));
   }
 });
-
 
 router.delete("/:name", async (req: Request, res: Response) => {
   try {

@@ -53,4 +53,14 @@ async function remove(name: string): Promise<boolean> {
   return res.deletedCount === 1;
 }
 
-export default { index, get, create, update, remove };
+// NEW: Add track to playlist
+async function addTrack(name: string, track: Track): Promise<PlaylistView | null> {
+  const updated = await PlaylistModel.findOneAndUpdate(
+    { name },
+    { $push: { tracks: track } },
+    { new: true, runValidators: true }
+  ).lean();
+  return updated;
+}
+
+export default { index, get, create, update, remove, addTrack };

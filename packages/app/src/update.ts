@@ -1,5 +1,5 @@
 import { Auth, ThenUpdate } from "@calpoly/mustang";
-import { Msg } from "./messages";
+import { Msg } from "./message";
 import { Model } from "./model";
 import { PlaylistView, Track } from "server/models";
 
@@ -25,14 +25,13 @@ export default function update(
     case "track/save": {
       const { playlistName, track } = message[1];
       return [
-        model, // Keep current model while saving
+        model,
         saveTrack(message[1], user)
           .then((savedTrack) => ["track/added", { playlistName, track: savedTrack }])
       ];
     }
     case "track/added": {
       const { playlistName, track } = message[1];
-      // Add the new track to the playlist in the model
       if (model.playlist && model.playlist.name === playlistName) {
         return {
           ...model,
