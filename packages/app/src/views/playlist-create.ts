@@ -3,7 +3,7 @@ import { css, html } from "lit";
 import { state } from "lit/decorators.js";
 import { Msg } from "../message";
 import { Model } from "../model";
-import "../components/playlist-create-form";
+import "../components/playlist-add";
 
 export class PlaylistCreateElement extends View<Model, Msg> {
   @state()
