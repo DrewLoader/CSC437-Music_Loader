@@ -35,7 +35,7 @@ export class AppHeader extends LitElement {
     .header-right {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 16px;
     }
 
     label {
@@ -49,10 +49,26 @@ export class AppHeader extends LitElement {
     input[type="checkbox"] {
       cursor: pointer;
     }
+
+    button {
+      padding: 8px 16px;
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
   `;
 
   connectedCallback() {
     super.connectedCallback();
+    // Check if dark mode was previously enabled
     const savedMode = localStorage.getItem("darkMode");
     if (savedMode === "true") {
       this.darkMode = true;
@@ -72,6 +88,12 @@ export class AppHeader extends LitElement {
     }
   }
 
+  signOut() {
+    localStorage.removeItem("mu:auth:jwt");
+    
+    window.location.assign("/login.html");
+  }
+
   render() {
     return html`
       <header>
@@ -87,6 +109,7 @@ export class AppHeader extends LitElement {
             />
             Dark mode
           </label>
+          <button @click=${this.signOut}>Sign Out</button>
         </div>
       </header>
     `;
