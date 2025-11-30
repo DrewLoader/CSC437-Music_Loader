@@ -109,7 +109,7 @@ export class PlaylistCreateFormElement extends View<Model, Msg> {
         },
         onFailure: (error: Error) => {
           console.error("Failed to create playlist:", error);
-          alert("Failed to create playlist. It may already exist.");
+          alert(`Failed to create playlist: ${error.message}`);
         }
       }
     ]);

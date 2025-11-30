@@ -24,18 +24,11 @@ export class HomeViewElement extends View<Model, Msg> {
       margin: 0 auto;
     }
 
-    .header-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 32px;
-    }
-
     h1 {
       color: var(--color-accent);
       font-family: var(--font-display);
       font-size: 2rem;
-      margin: 0;
+      margin: 0 0 16px 0;
     }
 
     .create-button {
@@ -49,6 +42,7 @@ export class HomeViewElement extends View<Model, Msg> {
       cursor: pointer;
       text-decoration: none;
       display: inline-block;
+      margin-bottom: 24px;
     }
 
     .create-button:hover {
@@ -88,6 +82,12 @@ export class HomeViewElement extends View<Model, Msg> {
       font-size: 0.9rem;
       color: #666;
     }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #666;
+    }
   `;
 
   constructor() {
@@ -100,22 +100,29 @@ export class HomeViewElement extends View<Model, Msg> {
   }
 
   render() {
+    const hasPlaylists = this.playlists.length > 0;
+
     return html`
-      <div class="header-container">
-        <h1>${this.username}'s Playlists</h1>
-        <a href="/app/playlist/new" class="create-button">
-          + Create Playlist
-        </a>
-      </div>
+      <h1>${this.username}'s Playlists</h1>
+      <a href="/app/playlist/new" class="create-button">
+        + Create Playlist
+      </a>
       <section>
-        ${this.playlists.map(p => html`
-          <a href="/app/playlist/${encodeURIComponent(p.name)}" class="playlist-item">
-            <div class="playlist-name">${p.name}</div>
-            <div class="playlist-meta">
-              ${p.visibility} • ${p.tracks.length} track${p.tracks.length !== 1 ? 's' : ''}
-            </div>
-          </a>
-        `)}
+        ${hasPlaylists
+          ? this.playlists.map(p => html`
+              <a href="/app/playlist/${encodeURIComponent(p.name)}" class="playlist-item">
+                <div class="playlist-name">${p.name}</div>
+                <div class="playlist-meta">
+                  ${p.visibility} • ${p.tracks.length} track${p.tracks.length !== 1 ? 's' : ''}
+                </div>
+              </a>
+            `)
+          : html`
+              <div class="empty-state">
+                <p>No playlists yet. Create your first playlist!</p>
+              </div>
+            `
+        }
       </section>
     `;
   }
