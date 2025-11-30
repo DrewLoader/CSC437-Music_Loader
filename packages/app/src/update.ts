@@ -23,7 +23,7 @@ export default function update(
       return { ...model, playlist };
     }
     case "track/save": {
-      const { playlistName, track } = message[1];
+      const { playlistName } = message[1];
       return [
         model,
         saveTrack(message[1], user)

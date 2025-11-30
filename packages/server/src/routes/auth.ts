@@ -45,7 +45,7 @@ router.post("/login", (req: Request, res: Response) => {
       .verify(username, password)
       .then((goodUser: string) => generateAccessToken(goodUser))
       .then((token) => res.status(200).send({ token: token }))
-      .catch((error) => res.status(401).send("Unauthorized"));
+      .catch((_error) => res.status(401).send("Unauthorized"));
   }
 });
 
@@ -76,7 +76,7 @@ export function authenticateUser(
   if (!token) {
     res.status(401).end();
   } else {
-    jwt.verify(token, TOKEN_SECRET, (error, decoded) => {
+    jwt.verify(token, TOKEN_SECRET, (_error, decoded) => {
       if (decoded) next();
       else res.status(401).end();
     });

@@ -33,7 +33,7 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 
-app.use("/app", (req, res) => {
+app.use("/app", (_req, res) => {
   const staticDir = process.env.STATIC || path.resolve(__dirname, "../../app/dist");
   const indexHtml = path.resolve(staticDir, "index.html");
   fs.readFile(indexHtml, { encoding: "utf8" }).then((html) => res.send(html));
