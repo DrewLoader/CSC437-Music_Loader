@@ -53,7 +53,6 @@ export class AppHeader extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
-    // Check if dark mode was previously enabled
     const savedMode = localStorage.getItem("darkMode");
     if (savedMode === "true") {
       this.darkMode = true;

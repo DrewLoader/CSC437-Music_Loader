@@ -16,7 +16,6 @@ setTimeout(() => {
         e.preventDefault();
         console.log("Submit intercepted!");
         
-        // Get inputs from the light DOM
         const usernameInput = loginForm.querySelector('input[name="username"]') as HTMLInputElement;
         const passwordInput = loginForm.querySelector('input[name="password"]') as HTMLInputElement;
         
@@ -50,12 +49,10 @@ setTimeout(() => {
             if (data.token) {
               console.log("Token received:", data.token);
               
-              // Store in the format mu-auth expects
               localStorage.setItem("mu:auth:jwt", data.token);
               
               console.log("Token stored, redirecting...");
               
-              // Redirect to app
               window.location.href = "/app";
             }
           } else {
