@@ -6,7 +6,7 @@ import { Msg } from "../message";
 import { Model } from "../model";
 import "../components/playlist-details";
 import "../components/playlist-songs";
-import "../components/track-form";
+import "../components/track-view";
 
 export class PlaylistViewElement extends View<Model, Msg> {
   @property({ attribute: "playlist-name" })
