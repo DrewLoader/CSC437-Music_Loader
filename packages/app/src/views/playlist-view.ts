@@ -133,7 +133,7 @@ export class PlaylistViewElement extends View<Model, Msg> {
           <svg class="icon">
             <use href="/icons/music.svg#icon-record"></use>
           </svg>
-          <h2>Add Track</h2>
+          <h2>New Track</h2>
         </div>
         <track-form playlistName=${playlistName}></track-form>
       </section>
