@@ -13,7 +13,7 @@ const routes: Switch.Route[] = [
   {
     path: "/app/playlist/:name",
     view: (p: Switch.Params) => html`
-      <playlist-view src=${`/api/playlists/${encodeURIComponent(p.name)}`}></playlist-view>
+      <playlist-view playlist-name=${p.name}></playlist-view>
     `
   },
   {
