@@ -1,6 +1,6 @@
 import { Auth, define, History, Switch } from "@calpoly/mustang";
 import { html } from "lit";
-import "./components/app-header";
+import "./components/app-header";  // Make sure this is imported
 import "./views/home-view";
 import "./components/playlist-view";
 import "./components/playlist-details";

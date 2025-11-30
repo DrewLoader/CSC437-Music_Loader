@@ -1,30 +1,97 @@
-// app/src/components/app-header.ts
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
+import { state } from "lit/decorators.js";
 
 export class AppHeader extends LitElement {
-  createRenderRoot() { return this; }
+  @state() darkMode = false;
+
+  static styles = css`
+    :host {
+      display: block;
+    }
+
+    header {
+      background: var(--color-header-bg);
+      color: var(--color-header-text);
+      padding: 12px 16px;
+      border-bottom: 2px solid var(--color-border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-family: var(--font-display);
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 0.95rem;
+    }
+
+    input[type="checkbox"] {
+      cursor: pointer;
+    }
+  `;
 
   connectedCallback() {
     super.connectedCallback();
-    const checkbox = this.querySelector('label.mode-switch input[type="checkbox"]') as HTMLInputElement | null;
-    if (checkbox) {
-      checkbox.addEventListener("change", (e) => {
-        const checked = (e.target as HTMLInputElement).checked;
-        document.body.classList.toggle("dark-mode", !!checked);
-      });
+    // Check if dark mode was previously enabled
+    const savedMode = localStorage.getItem("darkMode");
+    if (savedMode === "true") {
+      this.darkMode = true;
+      document.body.classList.add("dark-mode");
+    }
+  }
+
+  toggleDarkMode() {
+    this.darkMode = !this.darkMode;
+    
+    if (this.darkMode) {
+      document.body.classList.add("dark-mode");
+      localStorage.setItem("darkMode", "true");
+    } else {
+      document.body.classList.remove("dark-mode");
+      localStorage.setItem("darkMode", "false");
     }
   }
 
   render() {
     return html`
       <header>
-        <div class="header-center">Listeners</div>
-        <label class="mode-switch">
-          <input type="checkbox" autocomplete="off" />
-          Dark mode
-        </label>
+        <div class="header-left">
+          <h1>Listeners</h1>
+        </div>
+        <div class="header-right">
+          <label>
+            <input
+              type="checkbox"
+              .checked=${this.darkMode}
+              @change=${this.toggleDarkMode}
+            />
+            Dark mode
+          </label>
+        </div>
       </header>
     `;
   }
 }
+
 customElements.define("app-header", AppHeader);
