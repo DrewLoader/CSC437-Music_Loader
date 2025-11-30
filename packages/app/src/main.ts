@@ -6,24 +6,29 @@ import update from "./update";
 import "./components/app-header";
 import "./views/home-view";
 import "./views/playlist-view";
+import "./views/playlist-edit";
+import "./views/playlist-create";
 import "./components/playlist-details";
 import "./components/playlist-songs";
-import "./views/playlist-edit";
 
 console.log("App loading, checking token...");
 console.log("Token in localStorage:", localStorage.getItem("mu:auth:jwt"));
 
 const routes: Switch.Route[] = [
   {
-    path: "/app/playlist/:name",
-    view: (p: Switch.Params) => html`
-      <playlist-view playlist-name=${p.name}></playlist-view>
-    `
+    path: "/app/playlist/new",
+    view: () => html`<playlist-create></playlist-create>`
   },
   {
     path: "/app/playlist/:name/edit",
     view: (p: Switch.Params) => html`
       <playlist-edit playlist-name=${p.name}></playlist-edit>
+    `
+  },
+  {
+    path: "/app/playlist/:name",
+    view: (p: Switch.Params) => html`
+      <playlist-view playlist-name=${p.name}></playlist-view>
     `
   },
   {

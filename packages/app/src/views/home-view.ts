@@ -24,14 +24,35 @@ export class HomeViewElement extends View<Model, Msg> {
       margin: 0 auto;
     }
 
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 32px;
+    }
+
     h1 {
       color: var(--color-accent);
       font-family: var(--font-display);
       font-size: 2rem;
-      margin: 0 0 32px 0;
-      display: flex;
-      align-items: center;
-      gap: 12px;
+      margin: 0;
+    }
+
+    .create-button {
+      padding: 12px 24px;
+      background: var(--color-accent);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .create-button:hover {
+      opacity: 0.9;
     }
 
     section {
@@ -80,13 +101,18 @@ export class HomeViewElement extends View<Model, Msg> {
 
   render() {
     return html`
-      <h1>${this.username}'s Playlists</h1>
+      <div class="header-container">
+        <h1>${this.username}'s Playlists</h1>
+        <a href="/app/playlist/new" class="create-button">
+          + Create Playlist
+        </a>
+      </div>
       <section>
         ${this.playlists.map(p => html`
-          <a href="/app/playlist/${p.name}" class="playlist-item">
+          <a href="/app/playlist/${encodeURIComponent(p.name)}" class="playlist-item">
             <div class="playlist-name">${p.name}</div>
             <div class="playlist-meta">
-              ${p.visibility} • ${p.tracks.length} tracks
+              ${p.visibility} • ${p.tracks.length} track${p.tracks.length !== 1 ? 's' : ''}
             </div>
           </a>
         `)}

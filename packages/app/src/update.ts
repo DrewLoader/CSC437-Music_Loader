@@ -43,6 +43,23 @@ export default function update(
       return { ...model, playlist };
     }
     
+    case "playlist/create": {
+      return [
+        model,
+        createPlaylist(payload, user, callbacks || {})
+          .then((playlist) => ["playlist/created", { playlist }])
+      ];
+    }
+    
+    case "playlist/created": {
+      const { playlist } = payload;
+      const playlists = model.playlists || [];
+      return {
+        ...model,
+        playlists: [...playlists, playlist]
+      };
+    }
+    
     case "playlist/save": {
       const { name } = payload;
       return [
@@ -121,6 +138,40 @@ function requestPlaylist(
     });
 }
 
+function createPlaylist(
+  msg: {
+    playlist: PlaylistView;
+  },
+  user: Auth.User,
+  callbacks: Message.Reactions
+): Promise<PlaylistView> {
+  return fetch("/api/playlists", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      ...Auth.headers(user)
+    },
+    body: JSON.stringify(msg.playlist)
+  })
+    .then((response: Response) => {
+      if (response.status === 201 || response.status === 200) {
+        return response.json();
+      }
+      throw new Error(`Failed to create playlist: ${response.status}`);
+    })
+    .then((json: unknown) => {
+      if (json) {
+        if (callbacks.onSuccess) callbacks.onSuccess();
+        return helperPlaylist(json);
+      }
+      throw new Error("No JSON in API response");
+    })
+    .catch((err) => {
+      if (callbacks.onFailure) callbacks.onFailure(err);
+      throw err;
+    });
+}
+
 function savePlaylist(
   msg: {
     name: string;
@@ -144,7 +195,7 @@ function savePlaylist(
     .then((json: unknown) => {
       if (json) {
         if (callbacks.onSuccess) callbacks.onSuccess();
-        return json as PlaylistView;
+        return helperPlaylist(json);
       }
       throw new Error("No JSON in API response");
     })
