@@ -52,7 +52,7 @@ export class HomeViewElement extends View<Model, Msg> {
       gap: 16px;
     }
 
-    .playlist-item {
+    a.playlist-item {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -63,9 +63,10 @@ export class HomeViewElement extends View<Model, Msg> {
       color: var(--color-text);
       background: var(--color-surface);
       transition: all 0.2s;
+      cursor: pointer;
     }
 
-    .playlist-item:hover {
+    a.playlist-item:hover {
       background: var(--color-bg);
       border-color: var(--color-accent);
     }
@@ -135,24 +136,22 @@ export class HomeViewElement extends View<Model, Msg> {
       </h1>
       <section>
         <div class="playlist-list">
-          ${playlists.map(
-            (playlist) => html`
-              
-                href="/app/playlist/${encodeURIComponent(playlist.name)}"
-                class="playlist-item"
-              >
-                <svg class="icon">
-                  <use href="/icons/music.svg#icon-playlist"></use>
-                </svg>
-                <div class="playlist-info">
-                  <div class="playlist-name">${playlist.name}</div>
-                  <div class="playlist-meta">
-                    ${playlist.visibility} • ${playlist.tracks.length} track${playlist.tracks.length !== 1 ? 's' : ''}
-                  </div>
+          ${playlists.map(playlist => html`
+            
+              href="/app/playlist/${encodeURIComponent(playlist.name)}"
+              class="playlist-item"
+            >
+              <svg class="icon">
+                <use href="/icons/music.svg#icon-playlist"></use>
+              </svg>
+              <div class="playlist-info">
+                <div class="playlist-name">${playlist.name}</div>
+                <div class="playlist-meta">
+                  ${playlist.visibility} • ${playlist.tracks.length} track${playlist.tracks.length !== 1 ? 's' : ''}
                 </div>
-              </a>
-            `
-          )}
+              </div>
+            </a>
+          `)}
         </div>
       </section>
     `;
