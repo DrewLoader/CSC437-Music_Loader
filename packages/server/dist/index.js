@@ -21,6 +21,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
   isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
   mod
 ));
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var index_exports = {};
+module.exports = __toCommonJS(index_exports);
 var import_express = __toESM(require("express"));
 var import_promises = __toESM(require("node:fs/promises"));
 var import_node_path = __toESM(require("node:path"));
@@ -38,7 +41,7 @@ app.use("/api/playlists", import_auth.authenticateUser, import_playlists.default
 app.get("/", (_req, res) => {
   res.redirect("/app");
 });
-app.use("/app", (req, res) => {
+app.use("/app", (_req, res) => {
   const staticDir2 = process.env.STATIC || import_node_path.default.resolve(__dirname, "../../app/dist");
   const indexHtml = import_node_path.default.resolve(staticDir2, "index.html");
   import_promises.default.readFile(indexHtml, { encoding: "utf8" }).then((html) => res.send(html));
