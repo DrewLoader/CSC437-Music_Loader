@@ -17,12 +17,6 @@ export class HomeViewElement extends View<Model, Msg> {
   }
 
   static styles = css`
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
     :host {
       display: block;
       padding: 24px 16px;
@@ -34,16 +28,10 @@ export class HomeViewElement extends View<Model, Msg> {
       color: var(--color-accent);
       font-family: var(--font-display);
       font-size: 2rem;
-      margin-bottom: 32px;
+      margin: 0 0 32px 0;
       display: flex;
       align-items: center;
       gap: 12px;
-    }
-
-    h1 svg {
-      width: 40px;
-      height: 40px;
-      fill: var(--color-accent);
     }
 
     section {
@@ -53,39 +41,19 @@ export class HomeViewElement extends View<Model, Msg> {
       padding: 24px;
     }
 
-    .playlist-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
     .playlist-item {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      display: block;
       padding: 16px 20px;
+      margin-bottom: 12px;
       border: 2px solid var(--color-border);
       border-radius: 8px;
       text-decoration: none;
+      color: var(--color-text);
       background: var(--color-surface);
-      transition: all 0.2s;
-      cursor: pointer;
     }
 
     .playlist-item:hover {
-      background: var(--color-bg);
       border-color: var(--color-accent);
-    }
-
-    .playlist-item svg {
-      width: 32px;
-      height: 32px;
-      fill: var(--color-accent);
-      flex-shrink: 0;
-    }
-
-    .playlist-info {
-      flex: 1;
     }
 
     .playlist-name {
@@ -99,12 +67,6 @@ export class HomeViewElement extends View<Model, Msg> {
       font-size: 0.9rem;
       color: #666;
     }
-
-    .loading {
-      text-align: center;
-      padding: 40px;
-      color: #666;
-    }
   `;
 
   constructor() {
@@ -113,64 +75,22 @@ export class HomeViewElement extends View<Model, Msg> {
 
   connectedCallback() {
     super.connectedCallback();
-    console.log("Home view connected, requesting playlists");
     this.dispatchMessage(["playlists/request"]);
   }
 
   render() {
-    const playlists = this.playlists;
-    const username = this.username;
-
-    console.log("Rendering home view:", { playlists, username });
-
-    if (!playlists || playlists.length === 0) {
-      return html`
-        <h1>
-          <svg class="icon">
-            <use href="/icons/music.svg#icon-playlist"></use>
-          </svg>
-          <span>${username}'s Playlists</span>
-        </h1>
-        <section>
-          <p class="loading">Loading playlists...</p>
-        </section>
-      `;
-    }
-
     return html`
-      <h1>
-        <svg class="icon">
-          <use href="/icons/music.svg#icon-playlist"></use>
-        </svg>
-        <span>${username}'s Playlists</span>
-      </h1>
+      <h1>${this.username}'s Playlists</h1>
       <section>
-        <div class="playlist-list">
-          ${playlists.map(p => this.renderPlaylistItem(p))}
-        </div>
+        ${this.playlists.map(p => html`
+          <a href="/app/playlist/${p.name}" class="playlist-item">
+            <div class="playlist-name">${p.name}</div>
+            <div class="playlist-meta">
+              ${p.visibility} • ${p.tracks.length} tracks
+            </div>
+          </a>
+        `)}
       </section>
-    `;
-  }
-
-  renderPlaylistItem(playlist: PlaylistView) {
-    const trackCount = playlist.tracks.length;
-    const trackText = trackCount === 1 ? "track" : "tracks";
-    
-    return html`
-      
-        href="/app/playlist/${encodeURIComponent(playlist.name)}"
-        class="playlist-item"
-      >
-        <svg class="icon">
-          <use href="/icons/music.svg#icon-playlist"></use>
-        </svg>
-        <div class="playlist-info">
-          <div class="playlist-name">${playlist.name}</div>
-          <div class="playlist-meta">
-            ${playlist.visibility} • ${trackCount} ${trackText}
-          </div>
-        </div>
-      </a>
     `;
   }
 }
