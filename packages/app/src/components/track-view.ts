@@ -22,16 +22,10 @@ export class TrackFormElement extends View<Model, Msg> {
       display: block;
     }
 
-    form {
-      display: grid;
-      gap: 16px;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
     label {
       display: grid;
       gap: 4px;
+      margin-bottom: 16px;
     }
 
     label span {
@@ -47,21 +41,6 @@ export class TrackFormElement extends View<Model, Msg> {
       background: var(--color-surface);
       color: var(--color-text);
     }
-
-    button[type="submit"] {
-      padding: 12px 24px;
-      background: var(--color-accent);
-      color: white;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    button[type="submit"]:hover {
-      opacity: 0.9;
-    }
   `;
 
   constructor() {
@@ -70,12 +49,14 @@ export class TrackFormElement extends View<Model, Msg> {
 
   render() {
     return html`
-      <mu-form .init=${this.init} @mu-form:submit=${this._handleSubmit}>
+      <mu-form 
+        .init=${this.init} 
+        @mu-form:submit=${this._handleSubmit}
+      >
         <label>
           <span>Track Title</span>
           <input name="title" required placeholder="Enter song name" />
         </label>
-        <button type="submit">Add Track</button>
       </mu-form>
     `;
   }
