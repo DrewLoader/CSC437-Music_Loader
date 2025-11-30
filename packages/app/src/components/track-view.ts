@@ -73,11 +73,7 @@ export class TrackFormElement extends View<Model, Msg> {
       <mu-form .init=${this.init} @mu-form:submit=${this._handleSubmit}>
         <label>
           <span>Track Title</span>
-          <input name="title" required />
-        </label>
-        <label>
-          <span>Artist (optional)</span>
-          <input name="artist" />
+          <input name="title" required placeholder="Enter song name" />
         </label>
         <button type="submit">Add Track</button>
       </mu-form>
@@ -87,7 +83,7 @@ export class TrackFormElement extends View<Model, Msg> {
   get init(): Track {
     return {
       title: "",
-      href: "#",  // Just use a placeholder
+      href: "#",
       added: new Date().toISOString().split('T')[0]
     };
   }
@@ -97,7 +93,7 @@ export class TrackFormElement extends View<Model, Msg> {
     
     const track: Track = {
       title: formData.title,
-      href: "#", // placeholder
+      href: "#",
       added: new Date().toISOString().split('T')[0]
     };
     
@@ -106,12 +102,6 @@ export class TrackFormElement extends View<Model, Msg> {
         "track/save",
         { playlistName: this.playlistName, track }
       ]);
-      
-      // Reset the form
-      const form = this.renderRoot.querySelector("mu-form") as any;
-      if (form && form.init) {
-        form.init = this.init;
-      }
     }
   }
 }
