@@ -1,5 +1,8 @@
-import { Auth, define, History, Switch } from "@calpoly/mustang";
+import { Auth, define, History, Switch, Store } from "@calpoly/mustang";
 import { html } from "lit";
+import { Msg } from "./message";
+import { Model, init } from "./model";
+import update from "./update";
 import "./components/app-header";
 import "./views/home-view";
 import "./views/playlist-view";
@@ -32,6 +35,11 @@ define({
   "mu-switch": class AppSwitch extends Switch.Element {
     constructor() {
       super(routes, "music:history", "music:auth");
+    }
+  },
+  "mu-store": class AppStore extends Store.Provider<Model, Msg> {
+    constructor() {
+      super(update, init, "music:auth");
     }
   }
 });
