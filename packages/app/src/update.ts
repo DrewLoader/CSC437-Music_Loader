@@ -145,6 +145,8 @@ function createPlaylist(
   user: Auth.User,
   callbacks: Message.Reactions
 ): Promise<PlaylistView> {
+  console.log("Creating playlist with data:", msg.playlist);
+  
   return fetch("/api/playlists", {
     method: "POST",
     headers: {
@@ -154,20 +156,30 @@ function createPlaylist(
     body: JSON.stringify(msg.playlist)
   })
     .then((response: Response) => {
+      console.log("Create playlist response status:", response.status);
       if (response.status === 201 || response.status === 200) {
         return response.json();
       }
-      throw new Error(`Failed to create playlist: ${response.status}`);
+      return response.text().then(text => {
+        throw new Error(`Failed to create playlist: ${response.status} - ${text}`);
+      });
     })
     .then((json: unknown) => {
+      console.log("Playlist created, response:", json);
       if (json) {
-        if (callbacks.onSuccess) callbacks.onSuccess();
+        if (callbacks.onSuccess) {
+          console.log("Calling onSuccess callback");
+          callbacks.onSuccess();
+        }
         return helperPlaylist(json);
       }
       throw new Error("No JSON in API response");
     })
     .catch((err) => {
-      if (callbacks.onFailure) callbacks.onFailure(err);
+      console.error("Error in createPlaylist:", err);
+      if (callbacks.onFailure) {
+        callbacks.onFailure(err);
+      }
       throw err;
     });
 }

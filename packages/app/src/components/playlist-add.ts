@@ -98,14 +98,19 @@ export class PlaylistCreateFormElement extends View<Model, Msg> {
       tracks: []
     };
 
+    console.log("Submitting playlist:", playlist);
+
     this.dispatchMessage([
       "playlist/create",
       { playlist },
       {
         onSuccess: () => {
-          History.dispatch(this, "history/navigate", {
-            href: `/app/playlist/${encodeURIComponent(playlist.name)}`
-          });
+          console.log("Playlist created successfully, navigating...");
+          setTimeout(() => {
+            History.dispatch(this, "history/navigate", {
+              href: `/app/playlist/${encodeURIComponent(playlist.name)}`
+            });
+          }, 100);
         },
         onFailure: (error: Error) => {
           console.error("Failed to create playlist:", error);
