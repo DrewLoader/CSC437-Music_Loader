@@ -1,4 +1,4 @@
-import { LitElement, html } from "lit";
+import { LitElement, html, css } from "lit";
 import { property } from "lit/decorators.js";
 
 export class PlaylistDetails extends LitElement {
@@ -9,12 +9,29 @@ export class PlaylistDetails extends LitElement {
   @property() created: string = "";
   @property() description: string = "";
 
-
-  protected createRenderRoot() { return this; }
+  static styles = css`
+    dl {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px 20px;
+      margin: 0;
+      padding: 0;
+    }
+    
+    dt {
+      margin: 0;
+      font-weight: 600;
+      color: var(--color-accent);
+    }
+    
+    dd {
+      margin: 0;
+    }
+  `;
 
   override render() {
     return html`
-      <dl class="two">
+      <dl>
         <dt>Name</dt><dd>${this.name}</dd>
 
         <dt>Owner</dt>
