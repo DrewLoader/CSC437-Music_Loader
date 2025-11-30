@@ -15,7 +15,7 @@ export class PlaylistSongs extends LitElement {
       display: flex;
       align-items: center;
       gap: 16px;
-      background: var(--color-surface);
+      background: transparent;
       border: 2px solid var(--color-border);
       border-radius: 8px;
       padding: 16px 20px;

@@ -1,4 +1,4 @@
-import { LitElement, html } from 'lit';
+import { LitElement, html, css } from 'lit';
 import { property, state } from 'lit/decorators.js';
 import { Auth, Observer } from '@calpoly/mustang';
 import './playlist-details';
@@ -16,7 +16,50 @@ type PlaylistDetails = {
 type PlaylistData = { details: PlaylistDetails; tracks: Track[] };
 
 export class PlaylistView extends LitElement {
-  createRenderRoot() { return this; }
+  static styles = css`
+    :host {
+      display: block;
+      padding: 24px 16px;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    section {
+      background: var(--color-surface);
+      border: 2px solid var(--color-border);
+      border-radius: 8px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 2px solid var(--color-border);
+    }
+
+    .section-header svg {
+      width: 32px;
+      height: 32px;
+      fill: var(--color-accent);
+    }
+
+    .section-header h2 {
+      margin: 0;
+      color: var(--color-accent);
+      font-family: var(--font-display);
+      font-size: 1.75rem;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+  `;
 
   @property() src?: string;
 
@@ -42,14 +85,12 @@ export class PlaylistView extends LitElement {
   }
 
   private get authorization(): Record<string, string> | undefined {
-    // First try to get from authenticated user
     if (this._user?.authenticated) {
       return { 
         Authorization: `Bearer ${(this._user as Auth.AuthenticatedUser).token}` 
       };
     }
     
-    // Fallback: get token directly from localStorage
     const token = localStorage.getItem("mu:auth:jwt");
     if (token) {
       console.log("Using token from localStorage");
@@ -93,10 +134,12 @@ export class PlaylistView extends LitElement {
     return html`
       ${this.details ? html`
         <section id="details">
-          <h2>
-            <svg class="icon"><use href="/icons/music.svg#icon-playlist"></use></svg>
-            Details
-          </h2>
+          <div class="section-header">
+            <svg class="icon">
+              <use href="/icons/music.svg#icon-playlist"></use>
+            </svg>
+            <h2>Details</h2>
+          </div>
           <playlist-details
             name=${this.details.name}
             ownerName=${this.details.ownerName}
@@ -108,13 +151,19 @@ export class PlaylistView extends LitElement {
         </section>` : ''}
 
       <section id="tracks">
-        <h2>
-          <svg class="icon"><use href="/icons/music.svg#icon-record"></use></svg>
-          Tracks
-        </h2>
-        <ul class="list">
+        <div class="section-header">
+          <svg class="icon">
+            <use href="/icons/music.svg#icon-record"></use>
+          </svg>
+          <h2>Tracks</h2>
+        </div>
+        <ul>
           ${this.tracks.map(t => html`
-            <playlist-songs title=${t.title} href=${t.href} added=${t.added ?? ''}></playlist-songs>
+            <playlist-songs 
+              title=${t.title} 
+              href=${t.href} 
+              added=${t.added ?? ''}
+            ></playlist-songs>
           `)}
         </ul>
       </section>
@@ -143,6 +192,10 @@ function helperPlaylist(json: any): PlaylistData | null {
       created: String(details.created ?? ''),
       description: String(details.description ?? '')
     },
-    tracks: okTracks.map(t => ({ title: String(t.title), href: String(t.href), added: t.added ? String(t.added) : undefined }))
+    tracks: okTracks.map(t => ({ 
+      title: String(t.title), 
+      href: String(t.href), 
+      added: t.added ? String(t.added) : undefined 
+    }))
   };
 }
