@@ -6,6 +6,9 @@ import { connect } from "./services/mongo";
 import PlaylistRouter from "./routes/playlists";
 import auth, { authenticateUser } from "./routes/auth";
 
+export type { PlaylistView, Track } from "./models/playlist-view";
+export type { Credential } from "./models/credential";
+
 const app = express();
 const port = process.env.PORT || 3000;
 

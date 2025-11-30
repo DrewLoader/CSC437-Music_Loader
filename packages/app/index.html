@@ -10,11 +10,13 @@
   </head>
   <body>
     <mu-history provides="music:history">
-      <mu-auth provides="music:auth">
-        <article class="page">
-          <app-header></app-header>
-          <mu-switch></mu-switch>
-        </article>
+      <mu-auth provides="music:auth" redirect="/login.html">
+        <mu-store provides="music:model">
+          <article class="page">
+            <app-header></app-header>
+            <mu-switch></mu-switch>
+          </article>
+        </mu-store>
       </mu-auth>
     </mu-history>
 
