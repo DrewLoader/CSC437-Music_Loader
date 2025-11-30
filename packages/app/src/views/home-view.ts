@@ -17,6 +17,12 @@ export class HomeViewElement extends View<Model, Msg> {
   }
 
   static styles = css`
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     :host {
       display: block;
       padding: 24px 16px;
@@ -28,7 +34,7 @@ export class HomeViewElement extends View<Model, Msg> {
       color: var(--color-accent);
       font-family: var(--font-display);
       font-size: 2rem;
-      margin: 0 0 32px 0;
+      margin-bottom: 32px;
       display: flex;
       align-items: center;
       gap: 12px;
@@ -48,11 +54,12 @@ export class HomeViewElement extends View<Model, Msg> {
     }
 
     .playlist-list {
-      display: grid;
+      display: flex;
+      flex-direction: column;
       gap: 16px;
     }
 
-    a.playlist-item {
+    .playlist-item {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -60,13 +67,12 @@ export class HomeViewElement extends View<Model, Msg> {
       border: 2px solid var(--color-border);
       border-radius: 8px;
       text-decoration: none;
-      color: var(--color-text);
       background: var(--color-surface);
       transition: all 0.2s;
       cursor: pointer;
     }
 
-    a.playlist-item:hover {
+    .playlist-item:hover {
       background: var(--color-bg);
       border-color: var(--color-accent);
     }
@@ -107,19 +113,23 @@ export class HomeViewElement extends View<Model, Msg> {
 
   connectedCallback() {
     super.connectedCallback();
+    console.log("Home view connected, requesting playlists");
     this.dispatchMessage(["playlists/request"]);
   }
 
   render() {
-    const { playlists, username } = this;
+    const playlists = this.playlists;
+    const username = this.username;
 
-    if (playlists.length === 0) {
+    console.log("Rendering home view:", { playlists, username });
+
+    if (!playlists || playlists.length === 0) {
       return html`
         <h1>
           <svg class="icon">
             <use href="/icons/music.svg#icon-playlist"></use>
           </svg>
-          ${username}'s Playlists
+          <span>${username}'s Playlists</span>
         </h1>
         <section>
           <p class="loading">Loading playlists...</p>
@@ -132,28 +142,35 @@ export class HomeViewElement extends View<Model, Msg> {
         <svg class="icon">
           <use href="/icons/music.svg#icon-playlist"></use>
         </svg>
-        ${username}'s Playlists
+        <span>${username}'s Playlists</span>
       </h1>
       <section>
         <div class="playlist-list">
-          ${playlists.map(playlist => html`
-            
-              href="/app/playlist/${encodeURIComponent(playlist.name)}"
-              class="playlist-item"
-            >
-              <svg class="icon">
-                <use href="/icons/music.svg#icon-playlist"></use>
-              </svg>
-              <div class="playlist-info">
-                <div class="playlist-name">${playlist.name}</div>
-                <div class="playlist-meta">
-                  ${playlist.visibility} • ${playlist.tracks.length} track${playlist.tracks.length !== 1 ? 's' : ''}
-                </div>
-              </div>
-            </a>
-          `)}
+          ${playlists.map(p => this.renderPlaylistItem(p))}
         </div>
       </section>
+    `;
+  }
+
+  renderPlaylistItem(playlist: PlaylistView) {
+    const trackCount = playlist.tracks.length;
+    const trackText = trackCount === 1 ? "track" : "tracks";
+    
+    return html`
+      
+        href="/app/playlist/${encodeURIComponent(playlist.name)}"
+        class="playlist-item"
+      >
+        <svg class="icon">
+          <use href="/icons/music.svg#icon-playlist"></use>
+        </svg>
+        <div class="playlist-info">
+          <div class="playlist-name">${playlist.name}</div>
+          <div class="playlist-meta">
+            ${playlist.visibility} • ${trackCount} ${trackText}
+          </div>
+        </div>
+      </a>
     `;
   }
 }
